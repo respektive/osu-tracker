@@ -29,6 +29,7 @@
     });
 
     async function getUserLoop() {
+      await getUser();
       setTimeout(getUserLoop, 1000 * delay_value);
     }
 
@@ -88,15 +89,16 @@
             if (first)
               start_user.score_rank = data[0].rank;
             user.score_rank = data[0].rank;
-            console.log(data);
+            console.log('fetched');
             updateStats();
           })
-          } catch {
+          } catch (e) {
             if (first)
-              start_user.score_rank = isNan(score_rank) ? '0' : score_rank;
-            user.score_rank = isNan(score_rank) ? '0' : score_rank;
-            console.log(data);
+              start_user.score_rank = isNaN(score_rank) ? '0' : score_rank;
+            user.score_rank = isNaN(score_rank) ? '0' : score_rank;
+            console.log(e);
             updateStats();
+            return;
           }
         })
         .catch((error) => {
@@ -116,7 +118,7 @@
 
     function updateStats() {
       stats = [];
-      if (user || start_user) {
+      if (user && start_user) {
       $statsVisible.forEach(stat => {
           switch (stat.id) {
             case 0:
@@ -168,13 +170,14 @@
           }
         });
       } else {
+        console.log("not user && start_user")
         return;
       }
     }
 
 </script>
 
-{#if user} 
+{#if user && start_user} 
   {#each stats as stat }
         <Stat {stat} />
   {/each}
