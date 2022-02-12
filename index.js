@@ -1,11 +1,14 @@
 const { app, BrowserWindow, screen } = require('electron');
+const windowStateKeeper = require('electron-window-state');
 require('electron-reload')(__dirname);
 
-const createWindow = () => {
+const createWindow = (mainWindowState) => {
 
     window = new BrowserWindow({
-        width: 420,
-        height: 736,
+        x: mainWindowState.x,
+        y: mainWindowState.y,
+        width: mainWindowState.width,
+        height: mainWindowState.height,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
@@ -19,5 +22,14 @@ const createWindow = () => {
 
 let window = null;
 
-app.whenReady().then(createWindow)
+app.whenReady().then( () => {
+
+    let mainWindowState = windowStateKeeper({
+        defaultWidth: 420,
+        defaultHeight: 800
+      });
+
+    createWindow(mainWindowState);
+    mainWindowState.manage(window);
+})
 app.on('window-all-closed', () => app.quit());
