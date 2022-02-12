@@ -27,7 +27,11 @@
 	}
 
 	function formatNumber(n) {
-		return n.toLocaleString('en-US');
+		try {
+			return n.toLocaleString('en-US');
+		} catch(e) {
+			return '0'
+		}
 	}
 
 	function formatStat(s){
