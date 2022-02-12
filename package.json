@@ -1,0 +1,29 @@
+{
+  "name": "osu-tracker",
+  "version": "1.0.0",
+  "description": "Statistics tracker for osu! using Apiv2",
+  "main": "index.js",
+  "author": "respektive",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "rollup": "^2.3.4",
+    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-svelte": "^7.0.0",
+    "rollup-plugin-terser": "^7.0.0",
+    "svelte": "^3.0.0",
+    "svelte-dnd-action": "^0.9.14"
+  },
+  "dependencies": {
+    "electron": "^17.0.0",
+    "electron-reload": "^2.0.0-alpha.1",
+    "sirv-cli": "^2.0.0"
+  }
+}
