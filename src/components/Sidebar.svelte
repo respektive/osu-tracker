@@ -1,9 +1,9 @@
 <script>
-    import { user_id, delay, statsAvailable, statsVisible, client_id, client_secret, all_stats } from "../store";
+    import { user_id, delay, statsAvailable, statsVisible, client_id, client_secret, all_stats, mode } from "../store";
     import List from './List.svelte';
 
 	export let open = false;
-    let userid, clientid, clientsecret;
+    let userid, clientid, clientsecret, gamemode;
 
     client_id.subscribe(value => {
 		clientid = value;
@@ -15,6 +15,10 @@
 
     user_id.subscribe(value => {
 		userid = value;
+	});
+
+    mode.subscribe(value => {
+		gamemode = value;
 	});
 
     function showAll() {
@@ -44,6 +48,15 @@
         <p>User ID</p>
         <input type=number bind:value={userid}>
         <button on:click={user_id.set(userid)}>Save</button>
+
+        <p>Gamemode</p>
+        <select bind:value={gamemode}>
+            <option value="osu">osu</option>
+            <option value="taiko">taiko</option>
+            <option value="fruits">catch</option>
+            <option value="mania">mania</option>
+          </select>
+        <button on:click={mode.set(gamemode)}>Save</button>
 
         <p>Interval: {$delay} seconds</p>
         <input type=range min=5 max=60 bind:value={$delay} on:change={() => $delay = $delay}>

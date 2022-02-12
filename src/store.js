@@ -41,6 +41,12 @@ user_id.subscribe(value => {
     localStorage.setItem('user_id', value)
 });
 
+const storedMode = localStorage.getItem('mode');
+export const mode = writable(storedMode === null ? 'osu' : storedMode);
+mode.subscribe(value => {
+    localStorage.setItem('mode', value)
+});
+
 const storedUsername = localStorage.getItem('username');
 export const username = writable(storedUsername);
 username.subscribe(value => {

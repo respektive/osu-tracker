@@ -1,8 +1,8 @@
 <script>
     import { onMount } from "svelte";
-    import { user_id, username, avatar_url, delay, client_id, client_secret, statsVisible } from '../store';
+    import { user_id, username, avatar_url, delay, client_id, client_secret, statsVisible, mode } from '../store';
     import Stat from "./Stat.svelte";   
-    let user, stats, start_user, userid;
+    let user, stats, start_user, userid, gamemode;
     let user_name, avatarurl, delay_value;
 
     $: $client_secret, getUser();
@@ -16,7 +16,11 @@
     user_id.subscribe(value => {
 		userid = value;
     getUser(true);
-	});
+	  });
+    mode.subscribe(value => {
+		gamemode = value;
+    getUser(true);
+	  });
     username.subscribe(value => {
       user_name = value;
     });
@@ -51,7 +55,7 @@
           .then(data => {
             const token = data.access_token;
             const url = new URL(
-                `https://osu.ppy.sh/api/v2/users/${userid}/osu`
+                `https://osu.ppy.sh/api/v2/users/${userid}/${gamemode}`
             );
 
             let params = {
@@ -78,8 +82,6 @@
           }
           user = data;
           updateStats();
-          console.log(stats)
-          console.log('fetched.')
         })
         .catch((error) => {
         console.log(error);

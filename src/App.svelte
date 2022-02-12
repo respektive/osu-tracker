@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { username, avatar_url } from "./store";	
+  import { username, avatar_url, mode } from "./store";	
   import Sidebar from "./components/Sidebar.svelte";
   import User from "./components/User.svelte";
 
@@ -10,6 +10,7 @@
 
 <Sidebar bind:open/> 
 <header>
+	<div class="gamemode" style="--icon: url(../{$mode}.svg)"></div>
 	<p class="username">{$username}</p>
 	<button class="avatar" style="--avatar-url: url({$avatar_url})" on:click={() => open = !open}></button>
 </header>
@@ -67,9 +68,19 @@
 		border-color: white;
 	}
 
+	.gamemode {
+		padding: 5px;
+		width: 30px;
+		height: 30px;
+		background-repeat: no-repeat;
+  		background-position: center; 
+		background-size: 28px;
+		background-image: var(--icon);
+	}
+
 	.username {
 		margin: 0;
-		padding: 10px 15px;
+		padding: 12px 6px;
 	}
 
 </style>
