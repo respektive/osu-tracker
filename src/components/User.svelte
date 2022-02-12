@@ -5,6 +5,10 @@
     let user, stats, start_user, userid;
     let user_name, avatarurl, delay_value;
 
+    $: $client_secret, getUser();
+    $: $client_id, getUser();
+    $: $statsVisible, updateStats();
+
     delay.subscribe(value => {
 		  delay_value = value;
 	  });
@@ -95,6 +99,7 @@
 
     function updateStats() {
       stats = [];
+      if (user || start_user) {
       $statsVisible.forEach(stat => {
           switch (stat.id) {
             case 12:
@@ -124,6 +129,9 @@
               stats.push({id: stat.id, name: stat.name, value: user.statistics[stat.api], gained: user.statistics[stat.api] - start_user.statistics[stat.api]});
           }
         });
+      } else {
+        return;
+      }
     }
 
 </script>
