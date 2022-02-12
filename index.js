@@ -26,7 +26,7 @@ app.whenReady().then( () => {
 
     let mainWindowState = windowStateKeeper({
         defaultWidth: 420,
-        defaultHeight: 800
+        defaultHeight: 900
       });
 
     createWindow(mainWindowState);

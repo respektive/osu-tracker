@@ -127,6 +127,9 @@
               gained: (user.statistics.grade_counts.s + user.statistics.grade_counts.sh + user.statistics.grade_counts.ss + user.statistics.grade_counts.ssh + user.statistics.grade_counts.a) -
               (start_user.statistics.grade_counts.s + start_user.statistics.grade_counts.sh + start_user.statistics.grade_counts.ss + start_user.statistics.grade_counts.ssh + start_user.statistics.grade_counts.a)});
               break;
+            case 21:
+              stats.push({id: stat.id, name: stat.name, value: user.statistics.total_hits / user.statistics.play_count, gained: (user.statistics.total_hits / user.statistics.play_count) - (start_user.statistics.total_hits / start_user.statistics.play_count)});
+              break;
             default:
               stats.push({id: stat.id, name: stat.name, value: user.statistics[stat.api], gained: user.statistics[stat.api] - start_user.statistics[stat.api]});
           }
