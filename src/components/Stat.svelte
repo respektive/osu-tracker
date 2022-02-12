@@ -1,6 +1,14 @@
 <script>
+	import Tooltip from './Tooltip.svelte';
     export let stat;
 	let color;
+	let title = "Click to copy!";
+
+	function copy(stat) {
+		navigator.clipboard.writeText(`${stat.name}: ${formatStat(stat)} (${stat.gained === 0 ? '' : formatGained(stat)})`);
+		title = "Copied!";
+		setTimeout(() => {title = "Click to copy!"}, 1000);
+	}
 
 	//https://stackoverflow.com/a/7579799
 	function seconds2time (seconds) {
@@ -66,12 +74,14 @@
 	}
 
 </script>
+<Tooltip title={title}>
+	<dl class="stats_entry" on:click={copy(stat)}>
+		<dt class='stats_key'>{stat.name}:</dt>
+		<dd class='stats_value'>{formatStat(stat)}</dd>
+		<dd style='color: {color};' class='gained_value'>{stat.gained === 0 ? '' : formatGained(stat)}</dd>
+	</dl>
+</Tooltip>
 
-<dl class="stats_entry" on:click={ navigator.clipboard.writeText(`${stat.name}: ${formatStat(stat)} (${stat.gained === 0 ? '' : formatGained(stat)})`)}>
-    <dt class='stats_key'>{stat.name}:</dt>
-    <dd class='stats_value'>{formatStat(stat)}</dd>
-	<dd style='color: {color};' class='gained_value'>{stat.gained === 0 ? '' : formatGained(stat)}</dd>
-</dl>
 
 <style>
     .stats_entry {
