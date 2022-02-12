@@ -130,6 +130,9 @@
             case 21:
               stats.push({id: stat.id, name: stat.name, value: user.statistics.total_hits / user.statistics.play_count, gained: (user.statistics.total_hits / user.statistics.play_count) - (start_user.statistics.total_hits / start_user.statistics.play_count)});
               break;
+            case 22:
+              stats.push({id: stat.id, name: stat.name, value: user[stat.api], gained: user[stat.api] - start_user[stat.api]});
+              break;
             default:
               stats.push({id: stat.id, name: stat.name, value: user.statistics[stat.api], gained: user.statistics[stat.api] - start_user.statistics[stat.api]});
           }
