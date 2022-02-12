@@ -18,6 +18,7 @@
 	}
 </script>
 
+<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 <div
 	on:mouseover={mouseOver}
   on:mouseleave={mouseLeave}

@@ -44,12 +44,18 @@
 
 	function formatStat(s){
 		switch (s.id) {
+			case 0:
+				return formatNumber(s.value) == 0 ? 'No Score Rank' : '#' + formatNumber(s.value);
             case 4:
             case 11: {
             	return '#' + formatNumber(s.value);
             	}
 			case 7:
 				return seconds2time(s.value);
+			case 26:
+            case 27: {
+            	return formatNumber(Math.round(s.value));
+            	}
 			default:
 			  return formatNumber(s.value);
 		}
@@ -68,6 +74,10 @@
 		switch (s.id) {
 			case 7:
 				return r + seconds2time(s.gained);
+			case 26:
+            case 27: {
+            	return r + formatNumber(Math.round(s.value));
+            	}
 			default:
 				return r + formatNumber(s.gained);
 		}
@@ -77,8 +87,8 @@
 <Tooltip title={title}>
 	<dl class="stats_entry" on:click={copy(stat)}>
 		<dt class='stats_key'>{stat.name}:</dt>
-		<dd class='stats_value'>{formatStat(stat)}</dd>
-		<dd style='color: {color};' class='gained_value'>{stat.gained === 0 ? '' : formatGained(stat)}</dd>
+		<dd class='stats_value'>{isNaN(stat.value) ? '0' : formatStat(stat)}</dd>
+		<dd style='color: {color};' class='gained_value'>{stat.gained === 0 || isNaN(stat.gained) ? '' : formatGained(stat)}</dd>
 	</dl>
 </Tooltip>
 

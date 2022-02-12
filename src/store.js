@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 
 export const all_stats = [
+    {id:0, name: 'Score Rank'},
     {id:1, name: 'Ranked Score', api: 'ranked_score'},
     {id:2, name: 'Total Score', api: 'total_score'},
     {id:3, name: 'Play Count', api: 'play_count'},
@@ -25,7 +26,9 @@ export const all_stats = [
     {id:22, name: 'First Places', api: 'scores_first_count'},
     {id:23, name: 'Followers', api: 'follower_count'},
     {id:24, name: 'Medals', api: 'user_achievements'},
-    {id:25, name: 'Badges', api: 'badges'}
+    {id:25, name: 'Badges', api: 'badges'},
+    {id:26, name: 'R. Score/Play', api: 'ranked_score'},
+    {id:27, name: 'T. Score/Play', api: 'total_score'}
 ];
 
 const storedClientId = localStorage.getItem('client_id');

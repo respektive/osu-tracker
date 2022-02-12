@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import { user_id, username, avatar_url, delay, client_id, client_secret, statsVisible, mode } from '../store';
     import Stat from "./Stat.svelte";   
-    let user, stats, start_user, userid, gamemode;
+    let user, stats, start_user, userid, gamemode, score_rank;
     let user_name, avatarurl, delay_value;
 
     $: $client_secret, getUser();
@@ -29,7 +29,6 @@
     });
 
     async function getUserLoop() {
-      await getUser();
       setTimeout(getUserLoop, 1000 * delay_value);
     }
 
@@ -81,7 +80,24 @@
             avatar_url.set(start_user.avatar_url);
           }
           user = data;
-          updateStats();
+          try {
+            fetch(`https://score.respektive.pw/u/${userid}?mode=${gamemode}`)
+          .then(response => response.json())
+          .then(data => {
+            score_rank = data[0].rank;
+            if (first)
+              start_user.score_rank = data[0].rank;
+            user.score_rank = data[0].rank;
+            console.log(data);
+            updateStats();
+          })
+          } catch {
+            if (first)
+              start_user.score_rank = isNan(score_rank) ? '0' : score_rank;
+            user.score_rank = isNan(score_rank) ? '0' : score_rank;
+            console.log(data);
+            updateStats();
+          }
         })
         .catch((error) => {
         console.log(error);
@@ -95,7 +111,6 @@
     }
 
     onMount(async () => {
-      await getUser(true);
       getUserLoop();
     });
 
@@ -104,6 +119,9 @@
       if (user || start_user) {
       $statsVisible.forEach(stat => {
           switch (stat.id) {
+            case 0:
+              stats.push({id: stat.id, name: stat.name, value: user.score_rank, gained: user.score_rank - start_user.score_rank});
+              break;
             case 12:
               stats.push({id: stat.id, name: stat.name, value: user.statistics.level.current + '.' + user.statistics.level.progress, gained: parseInt(user.statistics.level.current + '.' + user.statistics.level.progress) - parseInt(start_user.statistics.level.current + '.' + start_user.statistics.level.progress)});
               break;
@@ -138,6 +156,11 @@
             case 24:
             case 25: {
               stats.push({id: stat.id, name: stat.name, value: user[stat.api].length, gained: user[stat.api].length - start_user[stat.api].length});
+              break;
+            }
+            case 26:
+            case 27: {
+              stats.push({id: stat.id, name: stat.name, value: user.statistics[stat.api] / user.statistics.play_count, gained: (user.statistics[stat.api] / user.statistics.play_count) - (start_user.statistics[stat.api] / start_user.statistics.play_count)});
               break;
             }
             default:
