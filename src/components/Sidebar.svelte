@@ -17,9 +17,14 @@
 		userid = value;
 	});
 
-    function resetStats() {
+    function showAll() {
         $statsAvailable = [];
         $statsVisible = all_stats;
+    }
+
+    function hideAll() {
+        $statsAvailable = all_stats;
+        $statsVisible = [];
     }
 
 </script>
@@ -45,11 +50,16 @@
     </div>
 
     <div class="stats_select">
-        <p style="float: left; margin-right: 30%; margin-top: 0px;">Hidden Stats</p>
-        <p>Visible Stats</p><br>
+        <div class="title">
+            <p>Hidden Stats</p>
+            <button class="button" on:click={hideAll}>Hide All</button>
+        </div>
+        <div class="title">
+            <p>Visible Stats</p>
+            <button class="button" on:click={showAll}>Show All</button>
+        </div>
         <List bind:items={$statsAvailable}/>
-        <List bind:items={$statsVisible}/>
-        <button on:click={resetStats}>Reset</button>
+        <List bind:items={$statsVisible}/>     
     </div>
 </aside>
 
@@ -75,6 +85,22 @@
 
     .stats_select {
         padding-bottom: 50px;
+    }
+
+    .title {
+        float: left;
+        width: 45%;
+        padding-left: 10px;
+    }
+
+    .title p {
+        display: inline;
+    }
+
+    .button {
+        width: 56px;
+        padding: 0;
+        font-size: 12px;
     }
 
 </style>
