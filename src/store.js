@@ -22,7 +22,10 @@ export const all_stats = [
     {id:19, name: 'Total S'},
     {id:20, name: 'Clears'},
     {id:21, name: 'Hits per Play'},
-    {id:22, name: 'First Places', api: 'scores_first_count'}
+    {id:22, name: 'First Places', api: 'scores_first_count'},
+    {id:23, name: 'Followers', api: 'follower_count'},
+    {id:24, name: 'Medals', api: 'user_achievements'},
+    {id:25, name: 'Badges', api: 'badges'}
 ];
 
 const storedClientId = localStorage.getItem('client_id');
