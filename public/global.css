@@ -39,14 +39,24 @@ label {
 }
 
 input, button, select, textarea {
+	background-color: #2a2226;
+	color: white;
 	font-family: inherit;
 	font-size: inherit;
 	-webkit-padding: 0.4em 0;
 	padding: 0.4em;
 	margin: 0 0 0.5em 0;
 	box-sizing: border-box;
-	border: 1px solid #ccc;
-	border-radius: 2px;
+	border: 1px solid transparent;
+	border-radius: 5px;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+textarea:focus, input:focus{
+    outline: none;
 }
 
 input:disabled {
@@ -54,8 +64,8 @@ input:disabled {
 }
 
 button {
-	color: #333;
-	background-color: #f4f4f4;
+	color: white;
+	background-color: #54454c;
 	outline: none;
 }
 
@@ -64,11 +74,11 @@ button:disabled {
 }
 
 button:not(:disabled):active {
-	background-color: #ddd;
+	background-color: #a38f98;
 }
 
 button:focus {
-	border-color: #666;
+	border-color: #a38f98;
 }
 
 ::selection {
@@ -94,4 +104,30 @@ border-radius: 3px;
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
 background: #a38f98; 
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="range"] {
+	-webkit-appearance: none;
+	height: 10px;
+  }
+
+input[type="range"]::-webkit-slider-runnable-track {
+	background-color: #1c1719;
+	border-radius: 5px;
+	height: 7px;
+  }
+
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	height: 8px;
+	width: 8px;
+	border-radius: 50%;
+	background: #ff66ab;
+	cursor: ew-resize;
 }
