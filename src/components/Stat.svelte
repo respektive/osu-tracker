@@ -89,7 +89,7 @@
 		margin: 0;
 		background-color: #1c1719;
 		padding: 5px;
-		min-width: 130px;	
+		min-width: 120px;
 		max-height: 16px;
 		min-height: 16px;
 		text-align: right;
@@ -107,7 +107,7 @@
 		margin-left: 5px;
 		background-color: #1c1719;
 		padding: 5px;
-		min-width: 100px;
+		min-width: 110px;
 		min-height: 16px;
 		text-align: left;
 		border-radius: 5px;
