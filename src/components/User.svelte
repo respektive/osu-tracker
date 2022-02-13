@@ -49,7 +49,7 @@
     async function getScoreRank() {
       try {
         const response = await fetchWithTimeout(`https://score.respektive.pw/u/${userid}?mode=${gamemode}`, {
-          timeout: 5000
+          timeout: 3000
         });
         if (response.status >= 200 && response.status <= 299) {
           const jsonResponse = await response.json();
