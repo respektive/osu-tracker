@@ -87,8 +87,9 @@
           .then(data => {
             score_rank = data[0].rank;
             if (first)
-              start_user.score_rank = data[0].rank;
-            user.score_rank = data[0].rank;
+              start_user.score_rank = isNaN(score_rank) ? '0' : score_rank;
+            console.log(score_rank)
+            user.score_rank = isNaN(score_rank) ? '0' : score_rank;
             console.log('fetched');
             updateStats();
           })
@@ -177,7 +178,7 @@
 
 </script>
 
-{#if user && start_user} 
+{#if user && start_user && String(score_rank)} 
   {#each stats as stat }
         <Stat {stat} />
   {/each}
