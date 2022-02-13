@@ -1,18 +1,20 @@
 # osu-tracker
 
  Statistics tracker for [osu!](https://osu.ppy.sh/) using [osu!api v2](https://osu.ppy.sh/docs/)
- 
- ![](https://pek.li/mi7t3o.png) ![](https://pek.li/aywhs8.gif)
- 
+
+ ![Screenshot](https://pek.li/mi7t3o.png) ![Selecting Stats gif](https://pek.li/aywhs8.gif)
+
  **Features:**
- - Several Statistics from the api for all four modes
- - Hide/Show each Statstic
- - Redordering the Stats list to your likings
- - Score Rank using self-hosted api (rank updates every ~30min, good enough)
- 
+
+- Several Statistics from the api for all four modes
+- Hide/Show each Statstic
+- Redordering the Stats list to your likings
+- Score Rank using self-hosted api (rank updates every ~30min, good enough)
+
  **Soon™ (Planned Features):**
- - Exporting Stats to text files for use in OBS or other programs
- - Restoring Stats after restart (Savable Sessions)
+
+- Exporting Stats to text files for use in OBS or other programs
+- Restoring Stats after restart (Savable Sessions)
 
 ## Download
 
