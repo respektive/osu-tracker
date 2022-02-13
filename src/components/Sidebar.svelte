@@ -79,7 +79,7 @@
 <style>
 	aside {
 		position: absolute;
-        margin-top: 40px;
+        padding-top: 40px;
 		right: -100%;
 		transition: right 0.5s ease-in-out;
 		height: 100%;
@@ -88,6 +88,7 @@
         z-index: 2;
         overflow: auto;
 	}
+
 	.open {
 		right: 0px
 	}
@@ -97,6 +98,7 @@
     }
 
     .stats_select {
+        height: 300px;
         padding-bottom: 50px;
     }
 
