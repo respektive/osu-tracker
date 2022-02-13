@@ -177,7 +177,7 @@
 
 </script>
 
-{#if user && start_user} 
+{#if user && start_user && score_rank} 
   {#each stats as stat }
         <Stat {stat} />
   {/each}
