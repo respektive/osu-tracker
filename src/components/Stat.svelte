@@ -67,7 +67,7 @@
 			r = '+';
 			color = 'green';
 		} else {
-			r = '-';
+			r = '';
 			color = 'red';
 		}
 
@@ -76,7 +76,7 @@
 				return r + seconds2time(s.gained);
 			case 26:
             case 27: {
-            	return r + formatNumber(Math.round(s.value));
+            	return r + formatNumber(Math.round(s.gained));
             	}
 			default:
 				return r + formatNumber(s.gained);
