@@ -170,7 +170,7 @@
           }
         });
       } else {
-        console.log("not user && start_user")
+        console.log("loading...");
         return;
       }
     }

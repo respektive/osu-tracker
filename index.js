@@ -16,7 +16,7 @@ const createWindow = (mainWindowState) => {
             contextIsolation: false,
         }
     });
-    //window.removeMenu();
+    window.removeMenu();
     window.loadFile('public/index.html');
 };
 
