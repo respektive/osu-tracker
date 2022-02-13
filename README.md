@@ -1,8 +1,8 @@
 # osu-tracker
 
- Statistics tracker for osu! using Apiv2
+ Statistics tracker for [osu!](https://osu.ppy.sh/) using [osu!api v2](https://osu.ppy.sh/docs/)
 
-## Obtaining ApiV2 Client Credentials
+## Obtaining osu!api v2 Client Credentials
 
 1. Go to [the OAuth section on the account settings page](https://osu.ppy.sh/home/account/edit#oauth) and create a new OAuth Application.  
 2. Give it a name like `osu-tracker` for example. (You don't need to set a Callback URL)  
