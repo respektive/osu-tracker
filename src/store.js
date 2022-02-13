@@ -61,6 +61,12 @@ username.subscribe(value => {
     localStorage.setItem('username', value)
 });
 
+const storedCachedScoreRank = localStorage.getItem('cached_score_rank');
+export const cached_score_rank = writable(storedCachedScoreRank);
+cached_score_rank.subscribe(value => {
+    localStorage.setItem('cached_score_rank', value)
+});
+
 const storedAvatarUrl = localStorage.getItem('avatar_url');
 export const avatar_url = writable(storedAvatarUrl === null || undefined ? 'https://a.ppy.sh/' : storedAvatarUrl);
 avatar_url.subscribe(value => {

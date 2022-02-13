@@ -1,12 +1,12 @@
 <script>
     import { onMount } from "svelte";
-    import { user_id, username, avatar_url, delay, client_id, client_secret, statsVisible, mode } from '../store';
+    import { user_id, username, avatar_url, delay, client_id, client_secret, statsVisible, mode, cached_score_rank } from '../store';
     import Stat from "./Stat.svelte";   
     let user, stats, start_user, userid, gamemode, score_rank;
     let user_name, avatarurl, delay_value;
 
-    $: $client_secret, getUser();
-    $: $client_id, getUser();
+    $: $client_secret, getStats();
+    $: $client_id, getStats();
     $: $statsVisible, updateStats();
 
     delay.subscribe(value => {
@@ -15,11 +15,11 @@
 
     user_id.subscribe(value => {
 		userid = value;
-    getUser(true);
+    getStats(true);
 	  });
     mode.subscribe(value => {
 		gamemode = value;
-    getUser(true);
+    getStats(true);
 	  });
     username.subscribe(value => {
       user_name = value;
@@ -28,93 +28,126 @@
       avatarurl = value;
     });
 
-    async function getUserLoop() {
-      await getUser();
-      setTimeout(getUserLoop, 1000 * delay_value);
+    async function getStatsLoop() {
+      await getStats();
+      setTimeout(getStatsLoop, 1000 * delay_value);
     }
 
-    async function getUser(first = false) {
-      if ($client_secret != 'someverylongstring'){
-        let headers = {
+    async function fetchWithTimeout(resource, options = {}) {
+      const { timeout = 8000 } = options;
+      
+      const controller = new AbortController();
+      const id = setTimeout(() => controller.abort(), timeout);
+      const response = await fetch(resource, {
+        ...options,
+        signal: controller.signal  
+      });
+      clearTimeout(id);
+      return response;
+    }
+
+    async function getScoreRank() {
+      try {
+        const response = await fetchWithTimeout(`https://score.respektive.pw/u/${userid}?mode=${gamemode}`, {
+          timeout: 5000
+        });
+        if (response.status >= 200 && response.status <= 299) {
+          const jsonResponse = await response.json();
+          return jsonResponse[0].rank;
+        } else {
+          return $cached_score_rank;
+        }
+      } catch {
+        return $cached_score_rank;
+      }
+    }
+
+    async function getUser(token) {
+      const url = new URL(
+                `https://osu.ppy.sh/api/v2/users/${userid}/${gamemode}`
+      );
+
+      const params = {
+              "key": "id",
+          };
+      Object.keys(params)
+          .forEach(key => url.searchParams.append(key, params[key]));
+
+      const headers = {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Bearer " + token,
+      };
+
+      const response = await fetch(url, {
+          method: "GET",
+          headers,
+      });
+      if (response.status >= 200 && response.status <= 299) {
+        const jsonResponse = await response.json();
+        return jsonResponse;
+      } else {
+        return;
+      }
+    }
+
+    async function getToken() {
+      if ($client_secret != 'someverylongstring') {
+        const headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
         };
 
-        let body = {
+        const body = {
             "client_id": $client_id,
             "client_secret": $client_secret,
             "grant_type": "client_credentials",
             "scope": "public"
         }
 
-        fetch("https://osu.ppy.sh/oauth/token", {
+        const response = await fetch("https://osu.ppy.sh/oauth/token", {
             method: "POST",
             headers,
             body: JSON.stringify(body),
-        }).then(response => response.json())
-          .then(data => {
-            const token = data.access_token;
-            const url = new URL(
-                `https://osu.ppy.sh/api/v2/users/${userid}/${gamemode}`
-            );
-
-            let params = {
-                "key": "id",
-            };
-            Object.keys(params)
-                .forEach(key => url.searchParams.append(key, params[key]));
-
-            let headers = {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-                "Authorization": "Bearer " + token,
-            };
-
-            fetch(url, {
-                method: "GET",
-                headers,
-            }).then(response => response.json())
-            .then(data => {
+        });
+        if (response.status >= 200 && response.status <= 299) {
+        const jsonResponse = await response.json();
+        return jsonResponse.access_token;
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+  }
+    async function getStats(first = false) {
+      const token = await getToken();
+      if (!token) {
+        return;
+      } else {
+        const data = await getUser(token);
+        if (!data) {
+          return;
+        } else {
           if (first) {
             start_user = data;
             username.set(start_user.username);
             avatar_url.set(start_user.avatar_url);
           }
           user = data;
-          try {
-            fetch(`https://score.respektive.pw/u/${userid}?mode=${gamemode}`)
-          .then(response => response.json())
-          .then(data => {
-            score_rank = data[0].rank;
-            if (first)
-              start_user.score_rank = isNaN(score_rank) ? '0' : score_rank;
-            console.log(score_rank)
+          const score_rank = await getScoreRank();
+          console.log($cached_score_rank);
+          if (first)
+            start_user.score_rank = isNaN(score_rank) ? '0' : score_rank;
             user.score_rank = isNaN(score_rank) ? '0' : score_rank;
-            console.log('fetched');
+            $cached_score_rank = isNaN(score_rank) ? '0' : score_rank;
             updateStats();
-          })
-          } catch (e) {
-            if (first)
-              start_user.score_rank = isNaN(score_rank) ? '0' : score_rank;
-            user.score_rank = isNaN(score_rank) ? '0' : score_rank;
-            console.log(e);
-            updateStats();
-            return;
-          }
-        })
-        .catch((error) => {
-        console.log(error);
-        stats = [];
-        });
-          })
-      } else {
-        return
+        }
       }
-
     }
 
     onMount(async () => {
-      getUserLoop();
+      getStatsLoop();
     });
 
     function updateStats() {
@@ -175,7 +208,6 @@
         return;
       }
     }
-
 </script>
 
 {#if user && start_user && String(score_rank)} 
