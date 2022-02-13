@@ -20,7 +20,7 @@
 
 You can find the newest version [here](https://github.com/respektive/osu-tracker/releases/latest) or on the [Releases](https://github.com/respektive/osu-tracker/releases) page.
 
-Includes installer and portable version for Windows aswell as an AppImage and binary files for Linux.
+Includes portable version for Windows aswell as an AppImage and binary files for Linux.
 
 ## Obtaining osu!api v2 Client Credentials
 
