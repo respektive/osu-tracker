@@ -14,7 +14,8 @@ const createWindow = (mainWindowState) => {
             enableRemoteModule: true,
             autoHideMenuBar: true,
             contextIsolation: false,
-        }
+        },
+        icon: __dirname + '/build/icon.png'
     });
     window.removeMenu();
     window.loadFile('public/index.html');
