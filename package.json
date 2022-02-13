@@ -8,7 +8,32 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "electron ."
+    "start": "electron .",
+    "build-win": "electron-builder --win",
+    "build-linux": "electron-builder --linux"
+  },
+  "build": {
+    "appId": "osu-tracker",
+    "linux": {
+      "target": [
+        "AppImage",
+        "tar.gz"
+      ],
+      "category": "Utility"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "installerIcon": "src/icon.ico",
+      "uninstallerIcon": "src/icon.ico",
+      "uninstallDisplayName": "osu!tracker",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -19,10 +44,11 @@
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
     "svelte": "^3.0.0",
-    "svelte-dnd-action": "^0.9.14"
+    "svelte-dnd-action": "^0.9.14",
+    "electron": "^17.0.0",
+    "electron-builder": "^22.14.13"
   },
   "dependencies": {
-    "electron": "^17.0.0",
     "electron-reload": "^2.0.0-alpha.1",
     "electron-window-state": "^5.0.3",
     "sirv-cli": "^2.0.0"
