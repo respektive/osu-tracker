@@ -68,7 +68,7 @@ cached_score_rank.subscribe(value => {
 });
 
 const storedAvatarUrl = localStorage.getItem('avatar_url');
-export const avatar_url = writable(storedAvatarUrl === null || undefined ? 'https://a.ppy.sh/' : storedAvatarUrl);
+export const avatar_url = writable(storedAvatarUrl ?? 'https://a.ppy.sh/');
 avatar_url.subscribe(value => {
     localStorage.setItem('avatar_url', value)
 });
