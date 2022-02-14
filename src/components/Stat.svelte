@@ -50,6 +50,8 @@
             case 11: {
             	return '#' + formatNumber(s.value);
             	}
+			case 6:
+				return formatNumber(s.value) + '%';
 			case 7:
 				return seconds2time(s.value);
 			case 26:
