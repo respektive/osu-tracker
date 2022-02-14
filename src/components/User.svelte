@@ -159,7 +159,7 @@
               stats.push({id: stat.id, name: stat.name, value: user.score_rank, gained: user.score_rank - start_user.score_rank});
               break;
             case 12:
-              stats.push({id: stat.id, name: stat.name, value: user.statistics.level.current + '.' + user.statistics.level.progress, gained: parseInt(user.statistics.level.current + '.' + user.statistics.level.progress) - parseInt(start_user.statistics.level.current + '.' + start_user.statistics.level.progress)});
+              stats.push({id: stat.id, name: stat.name, value: user.statistics.level.current + '.' + user.statistics.level.progress, gained: parseFloat(user.statistics.level.current + '.' + user.statistics.level.progress) - parseFloat(start_user.statistics.level.current + '.' + start_user.statistics.level.progress)});
               break;
             case 13:
             case 14:
