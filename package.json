@@ -1,6 +1,6 @@
 {
   "name": "osu-tracker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Statistics tracker for osu! using Apiv2",
   "main": "index.js",
   "author": "respektive",
@@ -10,7 +10,8 @@
     "dev": "rollup -c -w",
     "start": "electron .",
     "build-win": "electron-builder --win",
-    "build-linux": "electron-builder --linux"
+    "build-linux": "electron-builder --linux",
+    "publish": "electron-builder --win --linux -p always"
   },
   "build": {
     "appId": "osu-tracker",
@@ -38,18 +39,19 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
+    "electron": "^17.0.0",
+    "electron-builder": "^22.14.13",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.0.0",
     "rollup-plugin-terser": "^7.0.0",
     "svelte": "^3.0.0",
-    "svelte-dnd-action": "^0.9.14",
-    "electron": "^17.0.0",
-    "electron-builder": "^22.14.13"
+    "svelte-dnd-action": "^0.9.14"
   },
   "dependencies": {
     "electron-reload": "^2.0.0-alpha.1",
+    "electron-updater": "^4.6.5",
     "electron-window-state": "^5.0.3",
     "sirv-cli": "^2.0.0"
   }

@@ -1,6 +1,7 @@
 const { app, BrowserWindow, screen } = require('electron');
 const windowStateKeeper = require('electron-window-state');
 require('electron-reload')(__dirname);
+const {autoUpdater} = require("electron-updater");
 
 const createWindow = (mainWindowState) => {
 
@@ -32,5 +33,10 @@ app.whenReady().then( () => {
 
     createWindow(mainWindowState);
     mainWindowState.manage(window);
-})
+});
+
+app.on('ready', function()  {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
+
 app.on('window-all-closed', () => app.quit());
