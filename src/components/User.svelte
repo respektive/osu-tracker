@@ -136,7 +136,6 @@
           }
           user = data;
           const score_rank = await getScoreRank();
-          console.log($cached_score_rank);
           if (first)
             start_user.score_rank = isNaN(score_rank) ? '0' : score_rank;
             user.score_rank = isNaN(score_rank) ? '0' : score_rank;
