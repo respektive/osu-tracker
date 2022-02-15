@@ -1,6 +1,6 @@
 {
   "name": "osu-tracker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Statistics tracker for osu! using Apiv2",
   "main": "index.js",
   "author": "respektive",
