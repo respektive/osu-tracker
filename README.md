@@ -7,7 +7,7 @@
  **Features:**
 
 - Several Statistics from the api for all four modes
-- Hide/Show each Statstic
+- Hide/Show each Statistic
 - Redordering the Stats list to your likings
 - Score Rank using self-hosted api (rank updates every ~30min, good enough)
 
