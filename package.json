@@ -28,8 +28,8 @@
       ]
     },
     "nsis": {
-      "installerIcon": "src/icon.ico",
-      "uninstallerIcon": "src/icon.ico",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
       "uninstallDisplayName": "osu!tracker",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
