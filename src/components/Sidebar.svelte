@@ -74,6 +74,10 @@
         <List bind:items={$statsAvailable}/>
         <List bind:items={$statsVisible}/>     
     </div>
+
+    <div class="info">
+        <p>Version: 1.0.3</p>
+    </div>
 </aside>
 
 <style>
@@ -99,7 +103,6 @@
 
     .stats_select {
         height: 300px;
-        padding-bottom: 50px;
     }
 
     .title {
@@ -116,6 +119,11 @@
         width: 56px;
         padding: 0;
         font-size: 12px;
+    }
+
+    .info {
+        padding-bottom: 50px;
+        padding-left: 10px;
     }
 
 </style>
