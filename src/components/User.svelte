@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import { user_id, username, avatar_url, delay, client_id, client_secret, statsVisible, mode, cached_score_rank } from '../store';
     import Stat from "./Stat.svelte";   
+    import GetLevelPrecise from './levelCalc';
     let user, stats, start_user, userid, gamemode, score_rank;
     let user_name, avatarurl, delay_value;
 
@@ -158,7 +159,7 @@
               stats.push({id: stat.id, name: stat.name, value: user.score_rank, gained: user.score_rank - start_user.score_rank});
               break;
             case 12:
-              stats.push({id: stat.id, name: stat.name, value: user.statistics.level.current + '.' + user.statistics.level.progress, gained: parseFloat(user.statistics.level.current + '.' + user.statistics.level.progress) - parseFloat(start_user.statistics.level.current + '.' + start_user.statistics.level.progress)});
+              stats.push({id: stat.id, name: stat.name, value: GetLevelPrecise(user.statistics.total_score), gained: GetLevelPrecise(user.statistics.total_score) - GetLevelPrecise(start_user.statistics.total_score)});
               break;
             case 13:
             case 14:
