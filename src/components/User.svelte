@@ -3,6 +3,7 @@
     import { user_id, username, avatar_url, delay, client_id, client_secret, statsVisible, mode, cached_score_rank } from '../store';
     import Stat from "./Stat.svelte";   
     import GetLevelPrecise from './levelCalc';
+    const { ipcRenderer } = require("electron");
     let user, stats, start_user, userid, gamemode, score_rank;
     let user_name, avatarurl, delay_value;
 
@@ -137,11 +138,14 @@
           }
           user = data;
           const score_rank = await getScoreRank();
-          if (first)
+          if (first) {
             start_user.score_rank = isNaN(score_rank) ? '0' : score_rank;
-            user.score_rank = isNaN(score_rank) ? '0' : score_rank;
-            $cached_score_rank = isNaN(score_rank) ? '0' : score_rank;
-            updateStats();
+            ipcRenderer.send("start_user", {data: start_user});
+          }
+          user.score_rank = isNaN(score_rank) ? '0' : score_rank;
+          $cached_score_rank = isNaN(score_rank) ? '0' : score_rank;
+          ipcRenderer.send("user", {data: user});
+          updateStats();
         }
       }
     }
