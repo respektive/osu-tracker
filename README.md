@@ -10,10 +10,10 @@
 - Hide/Show each Statistic
 - Redordering the Stats list to your likings
 - Score Rank using self-hosted api (rank updates every ~30min, good enough)
+- Exporting Stats to text files for use in OBS or other programs (files are stored in systems temp directory)
 
  **Soon™ (Planned Features):**
 
-- Exporting Stats to text files for use in OBS or other programs
 - Restoring Stats after restart (Savable Sessions)
 
 ## Download
