@@ -74,6 +74,19 @@
 		}
 
 		switch (s.id) {
+			case 0:
+			case 4:
+			case 11: {
+				if (s.gained > 0) {
+					r = '-';
+					color = 'red';
+				} else {
+					r = '+';
+					color = 'green';
+					s.gained = Math.abs(s.gained)
+				}
+				return r + formatNumber(s.gained);
+			}
 			case 7:
 				return r + seconds2time(s.gained);
 			case 26:

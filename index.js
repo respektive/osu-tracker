@@ -267,6 +267,17 @@ function formatGained(s, content){
     }
 
     switch (s.id) {
+        case 0:
+        case 4:
+        case 11: {
+            if (content > 0) {
+                r = '-';
+            } else {
+                r = '+';
+                content = Math.abs(content)
+            }
+            return r + formatNumber(content);
+        }
         case 7:
             return r + seconds2time(content);
         case 26:
