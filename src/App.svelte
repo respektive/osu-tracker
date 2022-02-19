@@ -39,12 +39,14 @@
 		margin-top: 40px;
 		flex-direction: row;
   		display: flex;
-  		padding: 5px 10px 10px 10px;
+  		padding: 5px 10px 0px 10px;
   		overflow-x: hidden;
 		z-index: 1;
+		height: calc(100% - 45px);
 	}
 
 	.stats {
+		overflow: visible;
 		height: calc(100% - 32px);
   		font-size: 14px;
   		min-width: 400px;
