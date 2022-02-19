@@ -28,6 +28,8 @@ Includes portable version for Windows aswell as an AppImage and binary files for
 2. Give it a name like `osu-tracker` for example. (You don't need to set a Callback URL)  
 3. Register your Application and copy the ID and Secret into the app.
 
+![OAuth app on the website](https://pek.li/jvrxae.png)
+
 ## Building
 
 Clone the repo and cd into
