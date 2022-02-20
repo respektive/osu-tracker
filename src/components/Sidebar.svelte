@@ -76,7 +76,7 @@
     </div>
 
     <div class="info">
-        <p>Version: 1.1.1</p>
+        <p>Version: 1.1.2</p>
     </div>
 </aside>
 
