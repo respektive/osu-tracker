@@ -11,10 +11,13 @@
 - Redordering the Stats list to your likings
 - Score Rank using self-hosted api (rank updates every ~30min, good enough)
 - Exporting Stats to text files for use in OBS or other programs (files are stored in systems temp directory)
+- Savable Sessions
 
  **Soon™ (Planned Features):**
 
-- Restoring Stats after restart (Savable Sessions)
+- Ability to name Sessions
+- Make Session Manager look more pretty
+- Custom Window Titlebar (so it doesn't look like trash on Windows lol)
 
 ## Download
 

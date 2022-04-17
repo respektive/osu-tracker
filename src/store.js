@@ -94,3 +94,19 @@ export const statsVisible = writable(sv_parsed === null || sv_parsed.length == 0
 statsVisible.subscribe(value =>
   localStorage.setItem("stats_visible", JSON.stringify(value))
 );
+
+const ss_retrieved = localStorage.getItem("saved_sessions");
+const ss_parsed = JSON.parse(ss_retrieved);
+export const savedSessions = writable(ss_parsed === null ? [] : ss_parsed);
+
+savedSessions.subscribe(value =>
+  localStorage.setItem("saved_sessions", JSON.stringify(value))
+);
+
+const ssu_retrieved = localStorage.getItem("start_user");
+const ssu_parsed = JSON.parse(ss_retrieved);
+export const startUser = writable(ssu_parsed === null ? {} : ssu_parsed);
+
+startUser.subscribe(value =>
+  localStorage.setItem("start_user", JSON.stringify(value))
+);

@@ -1,6 +1,7 @@
 <script>
     import { user_id, delay, statsAvailable, statsVisible, client_id, client_secret, all_stats, mode } from "../store";
     import List from './List.svelte';
+    import Sessions from './Sessions.svelte';
 
 	export let open = false;
     let userid, clientid, clientsecret, gamemode;
@@ -75,8 +76,15 @@
         <List bind:items={$statsVisible}/>     
     </div>
 
+    <div class="session_manager">
+        <div>
+            <p>Sessions</p>
+        </div>
+        <Sessions/>
+    </div>
+
     <div class="info">
-        <p>Version: 1.1.2</p>
+        <p>Version: 1.2.0</p>
     </div>
 </aside>
 
@@ -97,7 +105,7 @@
 		right: 0px
 	}
 
-    .settings, .stats_select {
+    .settings, .stats_select, .session_manager {
         margin: 10px;
     }
 

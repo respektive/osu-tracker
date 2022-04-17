@@ -1,6 +1,6 @@
 <script>
     import { onMount } from "svelte";
-    import { user_id, username, avatar_url, delay, client_id, client_secret, statsVisible, mode, cached_score_rank } from '../store';
+    import { user_id, username, avatar_url, delay, client_id, client_secret, statsVisible, mode, cached_score_rank, startUser } from '../store';
     import Stat from "./Stat.svelte";   
     import GetLevelPrecise from './levelCalc';
     const { ipcRenderer } = require("electron");
@@ -10,9 +10,14 @@
     $: $client_secret, getStats();
     $: $client_id, getStats();
     $: $statsVisible, updateStats();
+    $: $startUser, updateStats();
 
     delay.subscribe(value => {
 		  delay_value = value;
+	  });
+
+    startUser.subscribe(value => {
+		  start_user = value;
 	  });
 
     user_id.subscribe(value => {
@@ -133,6 +138,8 @@
         } else {
           if (first) {
             start_user = data;
+            start_user.date = Date.now();
+            $startUser = start_user;
             username.set(start_user.username);
             avatar_url.set(start_user.avatar_url);
           }
