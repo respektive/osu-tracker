@@ -1,9 +1,12 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const windowStateKeeper = require('electron-window-state');
 require('electron-reload')(__dirname);
+const path = require("path");
 const fs = require("fs");
 const os = require('os');
 const tempPath = os.tmpdir();
+const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
+setupTitlebar();
 
 const all_stats = [
     {id:0, name: 'Score Rank'},
@@ -43,16 +46,20 @@ const createWindow = (mainWindowState) => {
         y: mainWindowState.y,
         width: mainWindowState.width,
         height: mainWindowState.height,
+        titleBarStyle: 'hidden',
+        frame: false,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
             autoHideMenuBar: true,
             contextIsolation: false,
+            preload: path.join(__dirname, "preload.js")
         },
         icon: __dirname + '/build/icon.png'
     });
     window.removeMenu();
     window.loadFile('public/index.html');
+    attachTitlebarToWindow(window);
 };
 
 let window = null;
