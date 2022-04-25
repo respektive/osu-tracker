@@ -18,6 +18,9 @@
 - Ability to name Sessions
 - Make Session Manager look more pretty
 - Custom Window Titlebar (so it doesn't look like trash on Windows lol)
+- Better way for exporting Stats (osu-profile like text fields?)
+- Login with osu! instead of Client Credentials
+- Custom Themes (load custom css files idk)
 
 ## Download
 
