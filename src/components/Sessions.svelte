@@ -1,5 +1,6 @@
 <script>
-	import { startUser, savedSessions } from "../store";	
+	import { startUser, savedSessions } from "../store";
+    const { ipcRenderer } = require("electron");
 
     let start_user, saved_sessions, start_date, count;
 
@@ -39,6 +40,7 @@
     function loadSession(s) {
         $startUser = s;
         start_user = s;
+        ipcRenderer.send("start_user", {data: start_user});
     }
 
 </script>

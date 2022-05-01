@@ -151,7 +151,6 @@
           }
           user.score_rank = isNaN(score_rank) ? '0' : score_rank;
           $cached_score_rank = isNaN(score_rank) ? '0' : score_rank;
-          ipcRenderer.send("user", {data: user});
           updateStats();
         }
       }
@@ -164,6 +163,7 @@
     function updateStats() {
       stats = [];
       if (user && start_user) {
+        ipcRenderer.send("user", {data: user});
       $statsVisible.forEach(stat => {
           switch (stat.id) {
             case 0:
