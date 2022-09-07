@@ -11,7 +11,7 @@ const ALL_STATS = [
     {"id": "play_count", "name": "Play Count"},
     {"id": "play_time", "name": "Play Time"},
     {"id": "total_hits", "name": "Total Hits"},
-    {"id": "maximum_combo", "name": "Maximum Combo"},
+    {"id": "maximum_combo", "name": "Max Combo"},
     {"id": "replays_watched_by_others", "name": "Replays Seen"},
     {"id": "ss_count", "name": "Gold SS"},
     {"id": "ssh_count", "name": "Silver SS"},
