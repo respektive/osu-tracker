@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron')
 const { Titlebar, Color } = require('custom-electron-titlebar');
 const path = require('path');
+const localVersion = require('../../package.json').version
 
 let titlebar;
 
@@ -9,6 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
       backgroundColor: Color.fromHex("#121212"),
       menu: null // = do not automatically use Menu.applicationMenu
     })
+    titlebar.updateTitle(`osu!tracker (${localVersion})`);
 })
 
 contextBridge.exposeInMainWorld('api',{

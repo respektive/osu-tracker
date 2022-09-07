@@ -14,7 +14,14 @@ const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-title
 setupTitlebar();
 
 const store = new Store();
+let statsData = []
 
+const { WebSocket, WebSocketServer } = require("ws")
+const wss = new WebSocketServer({ port: 3377 });
+
+wss.on('connection', function connection(ws) {
+  ws.send(JSON.stringify(statsData));
+});
 
 function createWindow() {
 
@@ -111,9 +118,15 @@ ipcMain.handle("getStats", async () => {
       store.set("initial_user", compactUser)
       initialUser = compactUser
     }
-    const data = getStats(compactUser, initialUser, visibleStats)
-  
-    return data
+    statsData = getStats(compactUser, initialUser, visibleStats)
+    // send stats to every websocket client
+    wss.clients.forEach(function each(client) {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(JSON.stringify(statsData));
+      }
+    });
+
+    return statsData
   } catch (err) {
     console.log(err)
     return null
