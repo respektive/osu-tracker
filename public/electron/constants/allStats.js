@@ -26,6 +26,7 @@ const ALL_STATS = [
     {"id": "badge_count", "name": "Badges"},
     {"id": "total_score_per_play", "name": "T. Score/Play"},
     {"id": "ranked_score_per_play", "name": "R. Score/Play"},
+    {"id": "hits_per_play", "name": "Hits per Play"},
 ]
 
 module.exports = {

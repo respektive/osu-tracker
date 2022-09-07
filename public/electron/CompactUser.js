@@ -32,6 +32,7 @@ class CompactUser {
         this.badge_count = user?.badges?.length
         this.total_score_per_play = this.total_score / this.play_count
         this.ranked_score_per_play = this.ranked_score / this.play_count
+        this.hits_per_play = this.total_hits / this.play_count
     }
 }
 
