@@ -35,7 +35,7 @@
     "eject": "react-scripts eject",
     "dev": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm:electron\"",
     "electron": "wait-on http://127.0.0.1:3000/ && electron .",
-    "build-electron": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js"
+    "dist": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --windows --linux"
   },
   "build": {
     "appId": "osu-tracker",
@@ -47,6 +47,7 @@
       "buildResources": "assets"
     },
     "linux": {
+      "icon": "public/icon.png",
       "target": [
         "AppImage",
         "tar.gz"
@@ -54,6 +55,7 @@
       "category": "Utility"
     },
     "win": {
+      "icon": "public/icon.png",
       "target": [
         "nsis",
         "portable"
