@@ -38,4 +38,11 @@ contextBridge.exposeInMainWorld('api',{
   setVisibilityData: async (visibilityData) => {
     await ipcRenderer.invoke("setVisibilityData", visibilityData);
   },
+  checkForUpdate: async () => {
+    const result = await ipcRenderer.invoke("checkForUpdate");
+    return result
+  },
+  openExternalLink: async (link) => {
+    await ipcRenderer.invoke("openExternalLink", link);
+  },
 })  

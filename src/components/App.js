@@ -5,7 +5,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container';
 import StatsGrid from "./StatsGrid"
 import Header from "./Header"
-import Alert from "./ErrorAlert"
+import ErrorAlert from "./ErrorAlert"
+import UpdateAlert from "./UpdateAlert"
 import Settings from "./Settings"
 import themes from "./themes"
 
@@ -18,11 +19,17 @@ function App() {
   const [stats, setStats] = useState([]);
   const [errorOpen, setErrorOpen] = useState(false)
   const [errorMsg, setErrorMsg] = useState("")
+  const [updateAvail, setUpdateAvail] = useState(false)
 
   const theme = useMemo(() =>
     createTheme(themes[settings?.theme ?? "dark"]),
     [settings]
     );
+
+  const checkForUpdate = async () => {
+      const upAv = await window.api.checkForUpdate()
+      setUpdateAvail(upAv)
+  }
 
   // get stats loop
   const getStats = async (first = false) => {
@@ -67,6 +74,8 @@ function App() {
 
   // Run on mount
   useEffect(() => {
+    checkForUpdate()
+    
     async function getSettings() {
       const response = await window.api.getSettings();
       setSettings(response)
@@ -110,7 +119,8 @@ function App() {
         <Container disableGutters={true} fixed>
           <CssBaseline />
           <Header toggleSettings={toggleSettings} username={username}/>
-          <Alert errorOpen={errorOpen} setErrorOpen={setErrorOpen} errorText={errorMsg}/>
+          <UpdateAlert updateAvail={updateAvail} setUpdateAvail={setUpdateAvail} />
+          <ErrorAlert errorOpen={errorOpen} setErrorOpen={setErrorOpen} errorText={errorMsg}/>
           {isSettingsOpen ? <Settings refreshStats={refreshStats}/> : <StatsGrid stats={stats}/>}
         </Container>
       </ThemeProvider>

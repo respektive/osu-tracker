@@ -1,5 +1,7 @@
 const path = require('path');
-
+const localVersion = require('../package.json').version
+const semver = require('semver')
+const axios = require('axios').default
 const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron');
 const isDev = require('electron-is-dev');
 const Store = require('electron-store');
@@ -60,6 +62,8 @@ function createWindow() {
 app.whenReady().then( () => {
     createWindow();
     store.delete("initial_user")
+    // store.delete("visible_stats")
+    // store.delete("hidden_stats")
 });
 
 app.on('window-all-closed', () => {
@@ -146,4 +150,16 @@ ipcMain.handle("setVisibilityData", async (e, arg) => {
 
   store.set("visible_stats", visibleStats)
   store.set("hidden_stats", hiddenStats)
+})
+
+ipcMain.handle("checkForUpdate", async () => {
+  const res = await axios.get("https://api.github.com/repos/respektive/osu-tracker/releases")
+  const latestVersion = res.data[0].name
+  const updateAvail = semver.lt(localVersion, latestVersion)
+  return updateAvail
+})
+
+ipcMain.handle("openExternalLink", async (e, arg) => {
+  const url = arg
+  require('electron').shell.openExternal(url);
 })
