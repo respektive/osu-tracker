@@ -1,0 +1,39 @@
+body {
+    user-select: none;
+}
+
+img {
+    -webkit-user-drag: none;
+}
+
+.cet-titlebar,
+.cet-titlebar > * {
+    font-family: Comfortaa;
+    font-weight: bold;
+}
+
+.cet-container {
+    border: 2px solid #121212;
+    border-top: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #2e2e2e; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #aaaaaa;
+border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #c2c2c2; 
+}

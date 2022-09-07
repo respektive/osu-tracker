@@ -33,4 +33,6 @@ function GetLevelPrecise(score) {
 	return res.toFixed(3);
 }
 
-export default GetLevelPrecise;
+module.exports = {
+    GetLevelPrecise
+}
