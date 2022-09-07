@@ -29,7 +29,7 @@ export default function StatsGrid({stats}) {
             return (
               <React.Fragment key={name}>
                 <Grid item xs={3.6}>
-                  <Typography sx={{ fontSize: "14px", fontWeight: 'bold', color: fontColor }}>{name}:</Typography>
+                  <Typography sx={{ fontSize: "14px", fontWeight: 'bold', color: fontColor, pt: "3px" }}>{name}:</Typography>
                 </Grid>
                 <Grid item xs={4.2}>
                   <Paper elevation={0} sx={borderStyle}>
