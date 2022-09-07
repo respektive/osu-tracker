@@ -1,7 +1,8 @@
-import React, { useState, useContext, useEffect } from "react"
-import { SettingsContext } from './SettingsContext';
+import React, { useState, useEffect } from "react"
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
-import { Typography, Stack, Grid, Paper, Box, Divider } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Typography, Stack, Grid, Paper, Box, Divider, Button } from '@mui/material';
 import Card from "./Card"
 
 export default function VisibilitySettings({ visibilityData, refreshStats }) {
@@ -48,8 +49,35 @@ export default function VisibilitySettings({ visibilityData, refreshStats }) {
             refreshStats()
       }, [columns])
 
+      const hideAll = async () => {
+          const allStats = columns.visibleStats.items.concat(columns.hiddenStats.items)
+          let data = {...columns}
+          data.hiddenStats.items = allStats
+          data.visibleStats.items = []
+
+          setColumns(data)
+      }
+
+      const showAll = async () => {
+          const allStats = columns.visibleStats.items.concat(columns.hiddenStats.items)
+          let data = {...columns}
+          data.visibleStats.items = allStats
+          data.hiddenStats.items = []
+
+          setColumns(data)
+      }
+
     return (
-        <Box sx={{ p: 2}}>
+        <Box sx={{ p: 1 }}>
+        <Grid container direction="row" justifyContent="space-around" spacing={2} sx={{ p: 0 }}>
+            <Grid item>
+                <Button size="small" sx={{ mb: 1, pt: .5 }} variant="contained" endIcon={<VisibilityIcon />} onClick={showAll} >Show all</Button>
+            </Grid>
+
+            <Grid item>
+                <Button size="small" sx={{ mb: 1, pt: .5 }} variant="contained" endIcon={<VisibilityOffIcon />} onClick={hideAll} >Hide all</Button>
+            </Grid>
+        </Grid>
         <Grid container direction="row" justifyContent="center" spacing={2}>
         <DragDropContext
           onDragEnd={result => onDragEnd(result, columns, setColumns)}

@@ -28,6 +28,10 @@ class CompactUser {
         this.total_s = (this.s_count ?? 0) + (this.sh_count ?? 0)
         this.clears = (this.total_ss ?? 0) + (this.total_s ?? 0) + (this.a_count ?? 0)
         this.country_rank = user?.statistics?.country_rank
+        this.medal_count = user?.user_achievements?.length
+        this.badge_count = user?.badges?.length
+        this.total_score_per_play = this.total_score / this.play_count
+        this.ranked_score_per_play = this.ranked_score / this.play_count
     }
 }
 

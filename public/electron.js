@@ -97,10 +97,10 @@ ipcMain.handle("setInitalUser", async () => {
 
 ipcMain.handle("getStats", async () => {
   try {
-    const visibleStats = store.get("visible_stats")
+    const visibleStats = store.get("visible_stats") ?? ALL_STATS
     const osuUser = await getOsuUser()
     const scoreRank = await getScoreRank()
-    if (!osuUser || !scoreRank || !visibleStats) return "Couldn't reach osu! api. (Invalid Client Credentials or User ID?)"
+    if (!osuUser || !scoreRank) return "Couldn't reach osu! api. (Invalid Client Credentials or User ID?)"
     const compactUser = new CompactUser(osuUser, scoreRank)
     let initialUser = store.get("initial_user")
     if (!initialUser) {
