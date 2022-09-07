@@ -65,7 +65,7 @@ export default function GeneralSettings({ refreshStats }) {
             <Grid item xs={5.5} >
                 <FormControl fullWidth  sx={{ mt: 1 }}>
                 <InputLabel id="gamemode-label">Gamemode</InputLabel>
-                <Select value={settings?.gamemode ?? ""} labelId="gamemode-label" id="gamemode-label" margin="dense" variant="filled" size="small" onChange={setGamemode}>
+                <Select value={settings?.gamemode ?? "osu"} labelId="gamemode-label" id="gamemode-label" margin="dense" variant="filled" size="small" onChange={setGamemode}>
                     <MenuItem value={""} disabled>Select a gamemode</MenuItem>
                     <MenuItem value={"osu"}>osu!</MenuItem>
                     <MenuItem value={"taiko"}>osu!taiko</MenuItem>
@@ -84,7 +84,7 @@ export default function GeneralSettings({ refreshStats }) {
             <Grid item xs={5.5}>
                 <FormControl fullWidth  sx={{ mt: 1 }}>
                 <InputLabel id="theme-label">Theme</InputLabel>
-                <Select value={settings?.theme ?? ""} labelId="theme-label" id="theme-label" margin="dense" variant="filled" size="small" onChange={setTheme}>
+                <Select value={settings?.theme ?? "dark"} labelId="theme-label" id="theme-label" margin="dense" variant="filled" size="small" onChange={setTheme}>
                     <MenuItem value={""} disabled>Select a theme</MenuItem>
                     <MenuItem value={"dark"}>Dark</MenuItem>
                     <MenuItem value={"light"}>Light</MenuItem>

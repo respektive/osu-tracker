@@ -52,7 +52,7 @@ async function getScoreRank() {
     const { user_id, gamemode } = settings
 
     try {
-        const response = await axios.get(`https://score.respektive.pw/u/${user_id}?mode=${gamemode}`)
+        const response = await axios.get(`https://score.respektive.pw/u/${user_id}?mode=${gamemode ?? "osu"}`)
         const scoreRank = response.data
         return scoreRank[0]
     } catch (err) {
@@ -86,7 +86,7 @@ async function getOsuUser() {
     })
     
     try {
-        const response = await api.get(`https://osu.ppy.sh/api/v2/users/${user_id}/${gamemode}`)
+        const response = await api.get(`https://osu.ppy.sh/api/v2/users/${user_id}/${gamemode ?? "osu"}`)
         const user = response.data
         store.set("username", user.username)
         return user
