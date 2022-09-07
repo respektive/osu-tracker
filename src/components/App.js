@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container';
 import StatsGrid from "./StatsGrid"
 import Header from "./Header"
+import Alert from "./ErrorAlert"
 import Settings from "./Settings"
 import themes from "./themes"
 
@@ -15,6 +16,8 @@ function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [username, setUsername] = useState()
   const [stats, setStats] = useState([]);
+  const [errorOpen, setErrorOpen] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
 
   const theme = useMemo(() =>
     createTheme(themes[settings?.theme ?? "dark"]),
@@ -29,10 +32,14 @@ function App() {
     if (first && data == null) {
       data = await window.api.getStats();
     }
-
-    if (data != null) {
-      setStats(data)
+    // if the data is not an array it will be an error msg
+    if (!Array.isArray(data)) {
+        setErrorOpen(true)
+        setErrorMsg(data ?? "Some unknown Error occurred")
+    } else {
+        setStats(data)
     }
+
     if (timeout != null) {
       clearTimeout(timeout)
       timeout = null
@@ -103,6 +110,7 @@ function App() {
         <Container disableGutters={true} fixed>
           <CssBaseline />
           <Header toggleSettings={toggleSettings} username={username}/>
+          <Alert errorOpen={errorOpen} setErrorOpen={setErrorOpen} errorText={errorMsg}/>
           {isSettingsOpen ? <Settings refreshStats={refreshStats}/> : <StatsGrid stats={stats}/>}
         </Container>
       </ThemeProvider>
