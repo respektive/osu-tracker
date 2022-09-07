@@ -22,9 +22,14 @@ function App() {
     );
 
   // get stats loop
-  const getStats = async () => {
-    const data = await window.api.getStats();
-    console.log(data)
+  const getStats = async (first = false) => {
+    let data = await window.api.getStats();
+    // try one more time if it returns null on first run
+    // sometimes the initial user might be set too late idk
+    if (first && data == null) {
+      data = await window.api.getStats();
+    }
+
     if (data != null) {
       setStats(data)
     }
@@ -73,7 +78,7 @@ function App() {
       clearTimeout(timeout)
       timeout = null
     }
-    getStats()
+    getStats(true)
 
     return () => {
       clearTimeout(timeout);
