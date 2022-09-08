@@ -53,6 +53,7 @@ const themes = {
             fontFamily: "Comfortaa",
           }
     },
+    // https://github.com/ppy/osu-web/blob/master/resources/assets/less/colors.less
     osuPink: getOsuPalette(333),
     osuPurple: getOsuPalette(255),
     osuBlue: getOsuPalette(200),

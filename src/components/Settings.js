@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import GeneralSettings from './GeneralSettings';
 import VisibilitySettings from './VisibilitySettings';
+import SessionManager from './SessionManager';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -75,7 +76,7 @@ export default function Settings({ refreshStats }) {
                 <VisibilitySettings visibilityData={visibilityData} refreshStats={refreshStats}/>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Session Manager
+                <SessionManager refreshStats={refreshStats} />
             </TabPanel>
             <TabPanel value={value} index={3}>
                 About Page

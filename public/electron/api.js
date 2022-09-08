@@ -81,8 +81,8 @@ async function getOsuUser() {
     axiosRetry(api, {
         retries: 5, // number of retries
         retryDelay: (retryCount) => {
-          console.log(`retry attempt: ${retryCount}`)
-          return retryCount * 2000 // time interval between retries
+            logger.warn(`api request failed, retrying attempt ${retryCount}`)
+            return retryCount * 2000 // time interval between retries
         }
     })
     

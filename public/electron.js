@@ -13,6 +13,7 @@ const { getStats } = require("./electron/formatter.js")
 const { setWindowBounds, getWindowBounds } = require("./electron/windowSettings.js")
 const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
 setupTitlebar();
+
 const { WebSocket, WebSocketServer } = require("ws")
 const tcpPortUsed = require('tcp-port-used');
 const store = new Store();
@@ -44,7 +45,7 @@ function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     minWidth: 420,
-    minHeight: 420,
+    minHeight: 190,
     autoHideMenuBar: true,
     icon: path.join(__dirname, './icon.ico'),
     titleBarStyle: 'hidden',
@@ -200,4 +201,35 @@ ipcMain.handle("openLogs", () => {
   const logFile = logger.transports.file.getFile()
   const filePath = logFile.path
   shell.showItemInFolder(filePath) 
+})
+
+ipcMain.handle("getSessions", async () => {
+  const sessions = store.get("sessions") ?? []
+  return sessions
+})
+
+ipcMain.handle("saveSession", async () => {
+  const sessions = store.get("sessions") ?? []
+  const initialUser = store.get("initial_user")
+  if (!sessions.some(user => user.date === initialUser.date)) {
+    sessions.push(initialUser)
+    store.set("sessions", sessions)
+  }
+  return sessions
+})
+
+ipcMain.handle("deleteSession", async (e, arg) => {
+  const session = arg
+  const sessions = store.get("sessions")
+  const newSessions = sessions.filter(s => s.date !== session.date)
+  store.set("sessions", newSessions)
+  return newSessions
+})
+
+ipcMain.handle("loadSession", async (e, arg) => {
+  const session = arg
+  const sessions = store.get("sessions")
+  const newSession = sessions.find(s => s.date === session.date)
+  store.set("initial_user", newSession)
+  return sessions
 })

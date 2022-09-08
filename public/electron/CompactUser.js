@@ -2,6 +2,7 @@ const { GetLevelPrecise } = require("./levelCalc.js")
 
 class CompactUser {
     constructor(user, scoreRank) {
+        this.date = Date.now()
         this.score_rank = scoreRank?.rank
         this.user_id = user?.id
         this.avatar_url = user?.avatar_url

@@ -50,4 +50,20 @@ contextBridge.exposeInMainWorld('api',{
   openLogs: async () => {
     await ipcRenderer.invoke("openLogs");
   },
+  getSessions: async () => {
+    const result = await ipcRenderer.invoke("getSessions");
+    return result
+  },
+  saveSession: async () => {
+    const result = await ipcRenderer.invoke("saveSession");
+    return result
+  },
+  deleteSession: async (session) => {
+    const result = await ipcRenderer.invoke("deleteSession", session);
+    return result
+  },
+  loadSession: async (session) => {
+    const result = await ipcRenderer.invoke("loadSession", session);
+    return result
+  },
 })
