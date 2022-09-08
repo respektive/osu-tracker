@@ -42,7 +42,6 @@ async function getAccessToken() {
         store.set("access_token", accessToken)
         return accessToken.access_token
     } catch (err) {
-        console.log(err)
         logger.error(err)
         return null
     }
@@ -58,7 +57,6 @@ async function getScoreRank() {
         const scoreRank = response.data
         return scoreRank[0]
     } catch (err) {
-        console.log(err)
         logger.error(err)
         return null
     }
@@ -94,7 +92,6 @@ async function getOsuUser() {
         store.set("username", user.username)
         return user
     } catch (err) {
-        console.log(err)
         logger.error(err)
         if (err.response.status === 401) {
             store.set("access_token", null)

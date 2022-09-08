@@ -136,7 +136,7 @@ ipcMain.handle("getStats", async () => {
       initialUser = compactUser
     }
     statsData = getStats(compactUser, initialUser, visibleStats)
-    // send stats to every websocket client
+    // send stats to websocket clients
     if (wss) {
       wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
@@ -147,7 +147,6 @@ ipcMain.handle("getStats", async () => {
 
     return statsData
   } catch (err) {
-    console.log(err)
     logger.error(err)
     return null
   }
