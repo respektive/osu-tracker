@@ -13,18 +13,17 @@ const { getStats } = require("./electron/formatter.js")
 const { setWindowBounds, getWindowBounds } = require("./electron/windowSettings.js")
 const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
 setupTitlebar();
-
+const { WebSocket, WebSocketServer } = require("ws")
+const tcpPortUsed = require('tcp-port-used');
 const store = new Store();
 let statsData = []
 
 let wss
 async function startWebSocket() {
   try {
-    const { WebSocket, WebSocketServer } = require("ws")
-    const { default: isPortReachable } = await import('is-port-reachable')
-    const portReachable = await isPortReachable(17881, {host: 'localhost'})
+    const inUse = await tcpPortUsed.check(17881, 'localhost')
 
-    if (!portReachable) {
+    if (!inUse) {
       wss = new WebSocketServer({ port: 17881 });
       logger.info("started WebSocket server")
       wss.on('connection', function connection(ws) {
