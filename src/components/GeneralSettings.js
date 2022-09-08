@@ -88,7 +88,14 @@ export default function GeneralSettings({ refreshStats }) {
                     <MenuItem value={""} disabled>Select a theme</MenuItem>
                     <MenuItem value={"dark"}>Dark</MenuItem>
                     <MenuItem value={"light"}>Light</MenuItem>
-                    <MenuItem value={"osuRed"}>osu! Redish</MenuItem>
+                    <MenuItem value={"osuPink"}>osu! Pink</MenuItem>
+                    <MenuItem value={"osuPurple"}>osu! Purple</MenuItem>
+                    <MenuItem value={"osuBlue"}>osu! Blue</MenuItem>
+                    <MenuItem value={"osuGreen"}>osu! Green</MenuItem>
+                    <MenuItem value={"osuLime"}>osu! Lime</MenuItem>
+                    <MenuItem value={"osuOrange"}>osu! Orange</MenuItem>
+                    <MenuItem value={"osuRed"}>osu! Red</MenuItem>
+                    <MenuItem value={"osuDarkOrange"}>osu! Dark Orange</MenuItem>
                 </Select>
                 </FormControl>
             </Grid>
