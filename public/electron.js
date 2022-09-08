@@ -9,7 +9,7 @@ const Store = require('electron-store');
 const { getOsuUser, getScoreRank } = require('./electron/api.js');
 const { ALL_STATS } = require('./electron/constants/allStats.js');
 const CompactUser = require("./electron/CompactUser.js")
-const { getStats } = require("./electron/formatter.js")
+const { getStats, getWebSocketData } = require("./electron/formatter.js")
 const { setWindowBounds, getWindowBounds } = require("./electron/windowSettings.js")
 const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
 setupTitlebar();
@@ -17,7 +17,7 @@ setupTitlebar();
 const { WebSocket, WebSocketServer } = require("ws")
 const tcpPortUsed = require('tcp-port-used');
 const store = new Store();
-let statsData = []
+let websocketData = {}
 
 let wss
 async function startWebSocket() {
@@ -28,7 +28,7 @@ async function startWebSocket() {
       wss = new WebSocketServer({ port: 17881 });
       logger.info("started WebSocket server")
       wss.on('connection', function connection(ws) {
-        ws.send(JSON.stringify(statsData));
+        ws.send(JSON.stringify(websocketData));
       });
     } else {
       logger.info("websocket port already in use")
@@ -136,12 +136,13 @@ ipcMain.handle("getStats", async () => {
       store.set("initial_user", compactUser)
       initialUser = compactUser
     }
-    statsData = getStats(compactUser, initialUser, visibleStats)
+    const statsData = getStats(compactUser, initialUser, visibleStats)
+    websocketData = getWebSocketData(compactUser, initialUser)
     // send stats to websocket clients
     if (wss) {
       wss.clients.forEach(function each(client) {
         if (client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify(statsData));
+          client.send(JSON.stringify(websocketData));
         }
       });
     }

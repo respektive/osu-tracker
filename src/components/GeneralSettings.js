@@ -1,10 +1,16 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { SettingsContext } from './SettingsContext';
 import { Typography, TextField, Button, Grid, FormControl, InputLabel, Select, MenuItem, Slider } from '@mui/material';
+import { HslColorPicker } from "react-colorful"
+import { useDebounce } from 'use-debounce'
+import "./color-picker.css"
 
 export default function GeneralSettings({ refreshStats }) {
     const [settings, setSettings] = useContext(SettingsContext)
     const [user_id, setUserId] = useState(settings?.user_id ?? "")
+    const [showColor, setShowColor] = useState(false)
+    const [customColor, setCustomColor] = useState(settings?.custom_color ?? "333")
+    const [debouncedColor] = useDebounce(customColor, 200);
 
     const setClientId = (event) => {
         setSettings({ ...settings, client_id: event.target.value });
@@ -37,6 +43,14 @@ export default function GeneralSettings({ refreshStats }) {
     const setTheme = (event) => {
         setSettings({ ...settings, theme: event.target.value });
     };
+
+    const saveCustomColor = (event) => {
+        setCustomColor(event)
+    };
+
+    useEffect(() => {
+        setSettings({ ...settings, custom_color: debouncedColor });
+    }, [debouncedColor])
 
     const openLogs = () => {
         window.api.openLogs();
@@ -99,13 +113,19 @@ export default function GeneralSettings({ refreshStats }) {
                     <MenuItem value={"osuOrange"}>osu! Orange</MenuItem>
                     <MenuItem value={"osuRed"}>osu! Red</MenuItem>
                     <MenuItem value={"osuDarkOrange"}>osu! Dark Orange</MenuItem>
+                    <MenuItem value={"custom"}>Custom</MenuItem>
                 </Select>
                 </FormControl>
             </Grid>
             <Grid item xs={5.5}>
-                <Button size="large" sx={{ mt: .5 }} variant="contained" onClick={openLogs}>Open Logs</Button>
+                <Button size="large" sx={{ mt: .5 }} variant="contained" onClick={() => { setShowColor(!showColor) }}>Color Picker</Button>
             </Grid>
         </Grid>
+        { showColor ? 
+        <Grid className="color-picker" container direction="row" justifyContent="center" alignItems="center" spacing={2} sx={{ mt: 2, mb: 2 }}>
+            <HslColorPicker color={customColor} onChange={saveCustomColor}/>
+        </Grid> : <></> }
+
     </>
     )
 }

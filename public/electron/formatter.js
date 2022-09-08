@@ -1,4 +1,4 @@
-
+const { ALL_STATS } = require("./constants/allStats")
 //https://stackoverflow.com/a/7579799
 function seconds2time (seconds) {
     var hours   = Math.floor(seconds / 3600);
@@ -21,6 +21,17 @@ function seconds2time (seconds) {
     time += seconds+"s";
     }
     return time;
+}
+
+function getWebSocketData(currentUser, initialUser) {
+    let data = {}
+    for (key of Object.keys(currentUser)) {
+        if (ALL_STATS.some( (e) => e.id === key)) {
+            data[key] = formatCurrent(key, currentUser[key] ?? 0)
+            data[key + "_gained"] = formatGained(key, (currentUser[key] ?? 0) - (initialUser[key] ?? 0))
+        }
+    }
+    return data
 }
 
 function getStats(currentUser, initialUser, visibleStats) {
@@ -101,5 +112,6 @@ function formatNumber(n) {
 }
 
 module.exports = {
-    getStats
+    getStats,
+    getWebSocketData,
 }

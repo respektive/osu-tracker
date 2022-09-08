@@ -8,7 +8,7 @@ import Header from "./Header"
 import ErrorAlert from "./ErrorAlert"
 import UpdateAlert from "./UpdateAlert"
 import Settings from "./Settings"
-import themes from "./themes"
+import { themes, getOsuPalette } from "./themes"
 
 let timeout;
 
@@ -21,10 +21,12 @@ function App() {
   const [errorMsg, setErrorMsg] = useState("")
   const [updateAvail, setUpdateAvail] = useState(false)
 
-  const theme = useMemo(() =>
-    createTheme(themes[settings?.theme ?? "dark"]),
-    [settings]
-    );
+  const theme = useMemo(() => {
+    if (settings?.theme && settings?.theme === "custom") {
+      return createTheme(getOsuPalette(settings?.custom_color?.h ?? 333))
+    }
+    return createTheme(themes[settings?.theme ?? "dark"])
+  },[settings]);
 
   const checkForUpdate = async () => {
       const upAv = await window.api.checkForUpdate()

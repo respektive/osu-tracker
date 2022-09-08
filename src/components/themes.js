@@ -64,4 +64,4 @@ const themes = {
     osuDarkOrange: getOsuPalette(20),
 }
 
-export default themes
+export { themes, getOsuPalette }
