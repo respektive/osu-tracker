@@ -78,7 +78,7 @@ export default function GeneralSettings({ refreshStats }) {
                 </FormControl>
             </Grid>
             <Grid item xs={5.5}>
-                <Typography>Interval in seconds</Typography>
+                <Typography sx={{ mt: .5}}>Interval in seconds</Typography>
                 <Slider aria-label="Interval in seconds" defaultValue={settings?.interval ? settings?.interval/1000 : 30} step={5} marks min={5} max={120} valueLabelDisplay="auto" onChange={setDelay}/>
             </Grid>
         </Grid>
@@ -103,7 +103,7 @@ export default function GeneralSettings({ refreshStats }) {
                 </FormControl>
             </Grid>
             <Grid item xs={5.5}>
-            <Button size="large" sx={{ mt: .5 }} variant="contained" onClick={openLogs}>Open Logs</Button>
+                <Button size="large" sx={{ mt: .5 }} variant="contained" onClick={openLogs}>Open Logs</Button>
             </Grid>
         </Grid>
     </>

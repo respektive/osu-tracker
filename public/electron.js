@@ -17,12 +17,26 @@ setupTitlebar();
 const store = new Store();
 let statsData = []
 
-const { WebSocket, WebSocketServer } = require("ws")
-const wss = new WebSocketServer({ port: 3377 });
+let wss
+async function startWebSocket() {
+  try {
+    const { WebSocket, WebSocketServer } = require("ws")
+    const { default: isPortReachable } = await import('is-port-reachable')
+    const portReachable = await isPortReachable(17881, {host: 'localhost'})
 
-wss.on('connection', function connection(ws) {
-  ws.send(JSON.stringify(statsData));
-});
+    if (!portReachable) {
+      wss = new WebSocketServer({ port: 17881 });
+      logger.info("started WebSocket server")
+      wss.on('connection', function connection(ws) {
+        ws.send(JSON.stringify(statsData));
+      });
+    } else {
+      logger.info("websocket port already in use")
+    }
+  } catch (err) {
+    logger.error(err)
+  }
+}
 
 function createWindow() {
 
@@ -74,6 +88,7 @@ app.whenReady().then( () => {
     store.delete("initial_user")
     // store.delete("visible_stats")
     // store.delete("hidden_stats")
+    startWebSocket()
 });
 
 app.on('window-all-closed', () => {
@@ -123,11 +138,13 @@ ipcMain.handle("getStats", async () => {
     }
     statsData = getStats(compactUser, initialUser, visibleStats)
     // send stats to every websocket client
-    wss.clients.forEach(function each(client) {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(JSON.stringify(statsData));
-      }
-    });
+    if (wss) {
+      wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(JSON.stringify(statsData));
+        }
+      });
+    }
 
     return statsData
   } catch (err) {
