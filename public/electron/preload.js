@@ -47,4 +47,7 @@ contextBridge.exposeInMainWorld('api',{
   openExternalLink: async (link) => {
     await ipcRenderer.invoke("openExternalLink", link);
   },
-})  
+  openLogs: async () => {
+    await ipcRenderer.invoke("openLogs");
+  },
+})

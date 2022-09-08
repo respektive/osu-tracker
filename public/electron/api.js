@@ -1,4 +1,5 @@
 const axios = require('axios').default
+const logger = require('electron-log');
 const Store = require('electron-store')
 const axiosRetry = require('axios-retry')
 
@@ -42,6 +43,7 @@ async function getAccessToken() {
         return accessToken.access_token
     } catch (err) {
         console.log(err)
+        logger.error(err)
         return null
     }
 }
@@ -57,6 +59,7 @@ async function getScoreRank() {
         return scoreRank[0]
     } catch (err) {
         console.log(err)
+        logger.error(err)
         return null
     }
 }
@@ -92,6 +95,7 @@ async function getOsuUser() {
         return user
     } catch (err) {
         console.log(err)
+        logger.error(err)
         if (err.response.status === 401) {
             store.set("access_token", null)
             await getAccessToken()

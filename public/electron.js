@@ -2,8 +2,9 @@ const path = require('path');
 const localVersion = require('../package.json').version
 const semver = require('semver')
 const axios = require('axios').default
-const { app, BrowserWindow, ipcMain, ipcRenderer } = require('electron');
+const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const isDev = require('electron-is-dev');
+const logger = require('electron-log');
 const Store = require('electron-store');
 const { getOsuUser, getScoreRank } = require('./electron/api.js');
 const { ALL_STATS } = require('./electron/constants/allStats.js');
@@ -68,6 +69,8 @@ function createWindow() {
 
 app.whenReady().then( () => {
     createWindow();
+    // clear logs on startup
+    logger.transports.file.getFile().clear();
     store.delete("initial_user")
     // store.delete("visible_stats")
     // store.delete("hidden_stats")
@@ -129,6 +132,7 @@ ipcMain.handle("getStats", async () => {
     return statsData
   } catch (err) {
     console.log(err)
+    logger.error(err)
     return null
   }
 })
@@ -174,5 +178,11 @@ ipcMain.handle("checkForUpdate", async () => {
 
 ipcMain.handle("openExternalLink", async (e, arg) => {
   const url = arg
-  require('electron').shell.openExternal(url);
+  shell.openExternal(url);
+})
+
+ipcMain.handle("openLogs", () => {
+  const logFile = logger.transports.file.getFile()
+  const filePath = logFile.path
+  shell.showItemInFolder(filePath) 
 })
