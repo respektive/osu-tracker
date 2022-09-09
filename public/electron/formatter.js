@@ -62,6 +62,7 @@ function formatCurrent(key, data) {
         case "play_time": {
             return seconds2time(data)
         }
+        case "pp":
         case "hits_per_play": {
             return formatNumber(data, false)
         }
@@ -101,6 +102,7 @@ function formatGained(key, data) {
         case "play_time": {
             return { value: data == 0 ? null : pre + seconds2time(data), color: color }
         }
+        case "pp":
         case "hits_per_play": {
             return { value: data == 0 ? null : pre + formatNumber(data, false), color: color }
         }
