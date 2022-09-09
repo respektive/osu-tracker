@@ -89,6 +89,7 @@ async function getOsuUser() {
     try {
         const response = await api.get(`https://osu.ppy.sh/api/v2/users/${user_id}/${gamemode ?? "osu"}`)
         const user = response.data
+        user.gamemode = gamemode ?? "osu"
         store.set("username", user.username)
         return user
     } catch (err) {

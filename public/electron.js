@@ -234,3 +234,8 @@ ipcMain.handle("loadSession", async (e, arg) => {
   store.set("initial_user", newSession)
   return sessions
 })
+
+ipcMain.handle("getCurrentSession", async () => {
+  const session = store.get("initial_user") ?? {}
+  return session
+})

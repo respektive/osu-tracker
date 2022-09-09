@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { SettingsContext } from './SettingsContext'
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -42,6 +43,7 @@ function TabPanel(props) {
   
 
 export default function Settings({ refreshStats }) {
+    const [settings, setSettings] = useContext(SettingsContext)
     const [value, setValue] = useState(0);
     const [visibilityData, setVisibilityData] = useState({});
 
@@ -57,6 +59,10 @@ export default function Settings({ refreshStats }) {
     const handleChange = (event, newValue) => {
       setValue(newValue);
       getData()
+    };
+
+    const setGamemode = (mode) => {
+      setSettings({ ...settings, gamemode: mode })
     };
 
     return (    
@@ -76,7 +82,7 @@ export default function Settings({ refreshStats }) {
                 <VisibilitySettings visibilityData={visibilityData} refreshStats={refreshStats}/>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <SessionManager refreshStats={refreshStats} />
+                <SessionManager refreshStats={refreshStats} setGamemode={setGamemode}/>
             </TabPanel>
             <TabPanel value={value} index={3}>
                 About Page

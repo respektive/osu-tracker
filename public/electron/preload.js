@@ -66,4 +66,8 @@ contextBridge.exposeInMainWorld('api',{
     const result = await ipcRenderer.invoke("loadSession", session);
     return result
   },
+  getCurrentSession: async () => {
+    const result = await ipcRenderer.invoke("getCurrentSession");
+    return result
+  },
 })
