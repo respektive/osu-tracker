@@ -1,4 +1,5 @@
 const { ALL_STATS } = require("./constants/allStats")
+
 //https://stackoverflow.com/a/7579799
 function seconds2time (seconds) {
     var hours   = Math.floor(seconds / 3600);
@@ -61,6 +62,9 @@ function formatCurrent(key, data) {
         case "play_time": {
             return seconds2time(data)
         }
+        case "hits_per_play": {
+            return formatNumber(data, false)
+        }
         default: {
             return formatNumber(data)
         }
@@ -97,15 +101,20 @@ function formatGained(key, data) {
         case "play_time": {
             return { value: data == 0 ? null : pre + seconds2time(data), color: color }
         }
+        case "hits_per_play": {
+            return { value: data == 0 ? null : pre + formatNumber(data, false), color: color }
+        }
         default: {
             return { value: data == 0 ? null : pre + formatNumber(data), color: color }
         }
     }
 }
 
-function formatNumber(n) {
+function formatNumber(n, round=true) {
     try {
-        return n ? n.toLocaleString('en-US') : 0
+        if (!n) return 0
+        if (round) n = Math.round(n)
+        return n.toLocaleString('en-US')
     } catch(e) {
         return '0'
     }
