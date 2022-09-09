@@ -57,7 +57,7 @@ function formatCurrent(key, data) {
             return "#" + formatNumber(data)
         }
         case "accuracy": {
-            return formatNumber(data) + "%"
+            return formatNumber(data, false) + "%"
         }
         case "play_time": {
             return seconds2time(data)
@@ -96,7 +96,7 @@ function formatGained(key, data) {
             return { value: data == 0 ? null : pre + formatNumber(data), color: color }
         }
         case "accuracy": {
-            return { value: data == 0 ? null : pre + formatNumber(data) + "%", color: color }
+            return { value: data == 0 ? null : pre + formatNumber(data, false) + "%", color: color }
         }
         case "play_time": {
             return { value: data == 0 ? null : pre + seconds2time(data), color: color }
