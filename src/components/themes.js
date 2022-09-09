@@ -40,6 +40,25 @@ const themes = {
             fontFamily: "Comfortaa",
           }
     },
+    discord: {
+      palette: {
+          mode: "dark",
+          background: {
+            default: "#282b30",
+            header: "#36393e",
+            paper: "#1e2124"
+          },
+          primary: {
+            main: "#7289da"
+          }
+        },
+        shape: {
+          borderRadius: 5,
+        },
+        typography: {
+          fontFamily: "Comfortaa",
+        }
+  },
     light: {
         palette: {
             background: {

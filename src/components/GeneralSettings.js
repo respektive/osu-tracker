@@ -74,7 +74,7 @@ export default function GeneralSettings({ refreshStats }) {
                 <TextField label="User ID" variant="filled" type="number" margin="dense" size="small" value={user_id} onChange={handleUserIdChange}/>
             </Grid>
             <Grid item xs={5.5}>
-                <Button size="large" sx={{ mt: .5 }} variant="contained" onClick={updateUser}>Refresh User</Button>
+                <Button size="large" sx={{ mt: 1 }} variant="contained" onClick={updateUser}>Refresh User</Button>
             </Grid>
         </Grid>
 
@@ -92,19 +92,21 @@ export default function GeneralSettings({ refreshStats }) {
                 </FormControl>
             </Grid>
             <Grid item xs={5.5}>
-                <Typography sx={{ mt: .5}}>Interval in seconds</Typography>
-                <Slider aria-label="Interval in seconds" defaultValue={settings?.interval ? settings?.interval/1000 : 30} step={5} marks min={5} max={120} valueLabelDisplay="auto" onChange={setDelay}/>
+                <Typography>Interval in seconds</Typography>
+                <Slider sx={{ p: 0 }} aria-label="Interval in seconds" defaultValue={settings?.interval ? settings?.interval/1000 : 30} step={5} marks min={5} max={120} valueLabelDisplay="auto" onChange={setDelay}/>
             </Grid>
         </Grid>
 
         <Grid container direction="row" justifyContent="space-evenly" alignItems="center" spacing={2}>
             <Grid item xs={5.5}>
-                <FormControl fullWidth  sx={{ mt: 1 }}>
+                <FormControl fullWidth  sx={{ mt: 1.5 }}>
                 <InputLabel id="theme-label">Theme</InputLabel>
                 <Select value={settings?.theme ?? "dark"} labelId="theme-label" id="theme-label" margin="dense" variant="filled" size="small" onChange={setTheme}>
                     <MenuItem value={""} disabled>Select a theme</MenuItem>
+                    <MenuItem value={"custom"}>Custom</MenuItem>
                     <MenuItem value={"dark"}>Dark</MenuItem>
                     <MenuItem value={"light"}>Light</MenuItem>
+                    <MenuItem value={"discord"}>Discord</MenuItem>
                     <MenuItem value={"osuPink"}>osu! Pink</MenuItem>
                     <MenuItem value={"osuPurple"}>osu! Purple</MenuItem>
                     <MenuItem value={"osuBlue"}>osu! Blue</MenuItem>
@@ -113,17 +115,16 @@ export default function GeneralSettings({ refreshStats }) {
                     <MenuItem value={"osuOrange"}>osu! Orange</MenuItem>
                     <MenuItem value={"osuRed"}>osu! Red</MenuItem>
                     <MenuItem value={"osuDarkOrange"}>osu! Dark Orange</MenuItem>
-                    <MenuItem value={"custom"}>Custom</MenuItem>
                 </Select>
                 </FormControl>
             </Grid>
             <Grid item xs={5.5}>
-                <Button size="large" sx={{ mt: .5 }} variant="contained" onClick={() => { setShowColor(!showColor) }}>Color Picker</Button>
+                <Button disabled={!(settings?.theme === "custom")} size="large" sx={{ mt: 2 }} variant="contained" onClick={() => { setShowColor(!showColor) }}>Color Picker</Button>
             </Grid>
         </Grid>
         { showColor ? 
         <Grid className="color-picker" container direction="row" justifyContent="center" alignItems="center" spacing={2} sx={{ mt: 2, mb: 2 }}>
-            <HslColorPicker color={customColor} onChange={saveCustomColor}/>
+            <HslColorPicker style={!(settings?.theme === "custom") ? {display: "none"} : {}} color={customColor} onChange={saveCustomColor}/>
         </Grid> : <></> }
 
     </>
