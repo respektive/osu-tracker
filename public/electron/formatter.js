@@ -28,8 +28,12 @@ function getWebSocketData(currentUser, initialUser) {
     let data = {}
     for (key of Object.keys(currentUser)) {
         if (ALL_STATS.some( (e) => e.id === key)) {
-            data[key] = formatCurrent(key, currentUser[key] ?? 0)
-            data[key + "_gained"] = formatGained(key, (currentUser[key] ?? 0) - (initialUser[key] ?? 0))
+            data[key] = {
+                current: formatCurrent(key, currentUser[key] ?? 0),
+                gained: formatGained(key, (currentUser[key] ?? 0) - (initialUser[key] ?? 0)).value
+            }
+        } else {
+            data[key] = initialUser[key]
         }
     }
     return data
