@@ -110,7 +110,7 @@ export default function SessionManager({ refreshStats, setGamemode }) {
 
                     <Tooltip title="Delete">
                     <IconButton aria-label="delete" size="small" onClick={() => {deleteSession(session)}} >
-                        <DeleteIcon />
+                        <DeleteIcon color="error" />
                     </IconButton>
                     </Tooltip>
                     </Grid>

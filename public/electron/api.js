@@ -6,8 +6,8 @@ const axiosRetry = require('axios-retry')
 axiosRetry(axios, {
     retries: 5, // number of retries
     retryDelay: (retryCount) => {
-      console.log(`retry attempt: ${retryCount}`)
-      return retryCount * 2000 // time interval between retries
+        logger.warn(`api request failed, retrying attempt ${retryCount}`)
+        return retryCount * 2000 // time interval between retries
     }
 })
 
@@ -97,6 +97,8 @@ async function getOsuUser() {
         if (err.response.status === 401) {
             store.set("access_token", null)
             await getAccessToken()
+            const retried_user = await getOsuUser()
+            return retried_user
         }
         return null
     }
