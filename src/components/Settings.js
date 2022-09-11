@@ -8,6 +8,7 @@ import GeneralSettings from './GeneralSettings';
 import VisibilitySettings from './VisibilitySettings';
 import SessionManager from './SessionManager';
 import Footer from './Footer';
+import Overlays from './Overlays';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -87,7 +88,7 @@ export default function Settings({ refreshStats }) {
                 <SessionManager refreshStats={refreshStats} setGamemode={setGamemode}/>
             </TabPanel>
             <TabPanel value={value} index={3}>
-                
+                <Overlays />
             </TabPanel>
         </Box>
 

@@ -14,6 +14,20 @@ const { setWindowBounds, getWindowBounds } = require("./electron/windowSettings.
 const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
 setupTitlebar();
 
+async function startWebServer() {
+  try {
+    const inUse = await tcpPortUsed.check(17882, 'localhost')
+
+    if (!inUse) {
+      require('./express/index.js')
+    } else {
+      logger.info("webserver port already in use")
+    }
+  } catch (err) {
+    logger.error(err)
+  }
+}
+
 const { WebSocket, WebSocketServer } = require("ws")
 const tcpPortUsed = require('tcp-port-used');
 const store = new Store();
@@ -89,6 +103,7 @@ app.whenReady().then( () => {
     // store.delete("visible_stats")
     // store.delete("hidden_stats")
     startWebSocket()
+    startWebServer()
 });
 
 app.on('window-all-closed', () => {
