@@ -8,7 +8,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: "97%",
-    borderRadius: "5px",
+    borderRadius: "15px",
     bgcolor: 'background.default',
     boxShadow: 24,
     p: 1,
