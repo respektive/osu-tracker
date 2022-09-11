@@ -102,6 +102,7 @@ function App() {
       clearTimeout(timeout);
       timeout = null
     }
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {

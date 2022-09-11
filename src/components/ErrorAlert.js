@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Stack, Alert, Collapse } from "@mui/material"
 
 export default function ErrorAlert({errorOpen, setErrorOpen, errorText}) {

@@ -50,6 +50,7 @@ export default function GeneralSettings({ refreshStats }) {
 
     useEffect(() => {
         setSettings({ ...settings, custom_color: debouncedColor });
+        // eslint-disable-next-line
     }, [debouncedColor])
 
     return (

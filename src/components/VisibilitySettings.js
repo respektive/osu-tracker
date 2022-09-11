@@ -47,6 +47,7 @@ export default function VisibilitySettings({ visibilityData, refreshStats }) {
       useEffect(() => {
             window.api.setVisibilityData(columns);
             refreshStats()
+            // eslint-disable-next-line
       }, [columns])
 
       const hideAll = async () => {
