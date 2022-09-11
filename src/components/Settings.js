@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import GeneralSettings from './GeneralSettings';
 import VisibilitySettings from './VisibilitySettings';
 import SessionManager from './SessionManager';
+import Footer from './Footer';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -66,13 +67,14 @@ export default function Settings({ refreshStats }) {
     };
 
     return (    
-        <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
+      <>
+        <Box sx={{ flexGrow: 1, overflow: 'hidden', pb: 0, minHeight: "calc(100vh - 104px);" }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="fullWidth">
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" variant="fullWidth" >
                     <Tab label="Settings" {...a11yProps(0)} />
                     <Tab label="Visibility" {...a11yProps(1)} />
                     <Tab label="Sessions" {...a11yProps(2)} />
-                    <Tab label="About" {...a11yProps(3)} />
+                    <Tab label="Overlays" {...a11yProps(3)} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
@@ -85,8 +87,11 @@ export default function Settings({ refreshStats }) {
                 <SessionManager refreshStats={refreshStats} setGamemode={setGamemode}/>
             </TabPanel>
             <TabPanel value={value} index={3}>
-                About Page
+                
             </TabPanel>
         </Box>
+
+        <Footer />
+      </>
     )
 }

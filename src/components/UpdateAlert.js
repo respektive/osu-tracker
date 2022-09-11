@@ -12,7 +12,7 @@ export default function ErrorAlert({updateAvail, setUpdateAvail}) {
         <Collapse in={updateAvail}>
             <Alert color="warning" severity='info' onClose={() => {setUpdateAvail(false)}}>
             <AlertTitle>New Update Available!</AlertTitle>
-            <Link component="button" variant="body2" onClick={openLink}>Click here</Link> to open the GitHub page.
+            <Link component="button" variant="body2" underline="hover" onClick={openLink}>Click here</Link> to open the GitHub page.
             </Alert>
         </Collapse>
     </Stack>

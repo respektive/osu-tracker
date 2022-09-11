@@ -52,10 +52,6 @@ export default function GeneralSettings({ refreshStats }) {
         setSettings({ ...settings, custom_color: debouncedColor });
     }, [debouncedColor])
 
-    const openLogs = () => {
-        window.api.openLogs();
-    }
-
     return (
         <>
         <Grid container direction="row" justifyContent="space-evenly" alignItems="center" spacing={2}>
