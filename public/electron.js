@@ -8,8 +8,10 @@ const logger = require('electron-log');
 const Store = require('electron-store');
 const { getOsuUser, getScoreRank } = require('./electron/api.js');
 const { ALL_STATS } = require('./electron/constants/allStats.js');
+const { EXAMPLE_TEXT_FILES } = require('./electron/constants/exampleTextFiles.js');
 const CompactUser = require("./electron/CompactUser.js")
 const { getStats, getWebSocketData } = require("./electron/formatter.js")
+const { writeTextFiles } = require("./electron/fileWriter.js")
 const { setWindowBounds, getWindowBounds } = require("./electron/windowSettings.js")
 const { setupTitlebar, attachTitlebarToWindow } = require('custom-electron-titlebar/main');
 setupTitlebar();
@@ -102,6 +104,7 @@ app.whenReady().then( () => {
     store.delete("initial_user")
     // store.delete("visible_stats")
     // store.delete("hidden_stats")
+    // store.delete("output_files")
     startWebSocket()
     startWebServer()
 });
@@ -161,6 +164,9 @@ ipcMain.handle("getStats", async () => {
         }
       });
     }
+    // write stats to text files
+    const files = store.get("output_files") ?? []
+    writeTextFiles(websocketData, files)
 
     return statsData
   } catch (err) {
@@ -254,3 +260,27 @@ ipcMain.handle("getCurrentSession", async () => {
   const session = store.get("initial_user") ?? {}
   return session
 })
+
+ipcMain.handle("getFiles", async () => {
+  const files = store.get("output_files")
+  if (!files) {
+    store.set("output_files", EXAMPLE_TEXT_FILES)
+    return EXAMPLE_TEXT_FILES
+  }
+  return files
+})
+
+ipcMain.handle("setFiles", async (e, arg) => {
+  const files = arg
+  store.set("output_files", files)
+})
+
+ipcMain.handle("showTextFiles", () => {
+  const filePath = path.join(app.getPath("documents"), "osu-tracker/")
+  shell.openPath(filePath) 
+})
+
+ipcMain.handle("getAllStats", async () => {
+  return ALL_STATS
+})
+

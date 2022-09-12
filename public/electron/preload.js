@@ -70,4 +70,18 @@ contextBridge.exposeInMainWorld('api',{
     const result = await ipcRenderer.invoke("getCurrentSession");
     return result
   },
+  getFiles: async () => {
+    const result = await ipcRenderer.invoke("getFiles");
+    return result
+  },
+  setFiles: async (files) => {
+    await ipcRenderer.invoke("setFiles", files);
+  },
+  showTextFiles: async () => {
+    await ipcRenderer.invoke("showTextFiles");
+  },
+  getAllStats: async () => {
+    const result = await ipcRenderer.invoke("getAllStats");
+    return result
+  },
 })

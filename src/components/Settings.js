@@ -75,7 +75,7 @@ export default function Settings({ refreshStats }) {
                     <Tab label="Settings" {...a11yProps(0)} />
                     <Tab label="Visibility" {...a11yProps(1)} />
                     <Tab label="Sessions" {...a11yProps(2)} />
-                    <Tab label="Overlays" {...a11yProps(3)} />
+                    <Tab label="OBS" {...a11yProps(3)} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
