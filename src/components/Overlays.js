@@ -158,19 +158,12 @@ export default function Overlays() {
           }}
         />
 
-
         <Grid container direction="row" justifyContent="center" alignItems="center" spacing={1} sx={{ p: 2 }}>
         
             <Grid item>
               <Paper elevation={0} sx={{ p: 1}}>
                 <Typography>Editing: {selectedFile?.file_name ?? "No file selected"}</Typography>
               </Paper>  
-            </Grid>
-
-            <Grid item>
-              <Button size="small" variant="contained" onClick={saveFile}>
-                  <Typography sx={{ mt: 0.5 }} variant="button" >save</Typography>
-              </Button>
             </Grid>
 
             <Grid item>
@@ -182,7 +175,6 @@ export default function Overlays() {
             </Grid>
             
         </Grid>
-
 
         <Typography align="center" sx={{fontWeight: 'bold', mb: 1}}>WIP Overlays for OBS:</Typography>
 
