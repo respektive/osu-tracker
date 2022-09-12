@@ -4,6 +4,8 @@
 
  ![Screenshot](https://pek.li/0ifqap.png)
 
+https://user-images.githubusercontent.com/22381687/189698555-167156df-0a61-4d98-aeb5-1fa16b236d21.mp4
+
  **Features:**
 
 - Several Statistics from the api for all four modes
