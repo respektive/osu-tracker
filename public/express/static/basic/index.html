@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>basic</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <p>Ranked Score: <span id="ranked_score"></span></p>
+
+  <p>Gained Score: <span id="ranked_score_gained"></span></p>
+
+  <p>Clears this Session: <span id="clears_gained"></span></p>
+
+  <table width="60%" cellspacing="0" cellpadding="0" >
+    <tbody>
+      <tr>
+        <td width="42"><img src="assets/X.png" height="42"></td><td width="50" id="total_ss_gained">7675</td>
+        <td width="42"><img src="assets/S.png" height="42"></td><td width="50" id="total_s_gained">15109</td>
+        <td width="42"><img src="assets/A.png" height="42"></td><td width="50" id="total_a_gained">6081</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script src="deps/reconnecting-websocket.min.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>

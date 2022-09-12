@@ -1,0 +1,15 @@
+body {
+    font-weight: 600;
+    font-family: 'Comfortaa';
+    color: white;
+    text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black;
+    font-size: 38px;
+}
+
+p {
+    margin: 1px;
+}
+
+#ranked_score_gained {
+    color: greenyellow;
+}

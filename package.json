@@ -1,21 +1,61 @@
 {
   "name": "osu-tracker",
-  "version": "1.2.1",
-  "description": "Statistics tracker for osu! using Apiv2",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "Statistics tracker for osu! using osu!apiv2",
   "author": "respektive",
   "license": "MIT",
+  "private": true,
+  "main": "public/electron.js",
+  "homepage": "./",
+  "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@fontsource/comfortaa": "^4.5.9",
+    "@mui/icons-material": "^5.10.3",
+    "@mui/material": "^5.10.2",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
+    "axios-retry": "^3.3.1",
+    "custom-electron-titlebar": "^4.1.0",
+    "electron-is-dev": "^2.0.0",
+    "electron-log": "^4.4.8",
+    "electron-store": "^8.1.0",
+    "express": "^4.18.1",
+    "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-colorful": "^5.6.1",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "semver": "^7.3.7",
+    "tcp-port-used": "^1.0.2",
+    "use-debounce": "^8.0.4",
+    "web-vitals": "^2.1.4",
+    "ws": "^8.8.1"
+  },
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "start": "electron .",
-    "build-win": "electron-builder --win",
-    "build-linux": "electron-builder --linux",
-    "publish": "electron-builder --win --linux -p always"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "dev": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm:electron\"",
+    "electron": "wait-on http://127.0.0.1:3000/ && electron .",
+    "build-linux": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --linux",
+    "build-win": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --windows",
+    "dist": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --windows --linux"
   },
   "build": {
     "appId": "osu-tracker",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
     "linux": {
+      "icon": "public/icon.png",
       "target": [
         "AppImage",
         "tar.gz"
@@ -23,36 +63,43 @@
       "category": "Utility"
     },
     "win": {
+      "icon": "public/icon.png",
       "target": [
         "nsis",
         "portable"
       ]
     },
     "nsis": {
-      "installerIcon": "build/icon.ico",
-      "uninstallerIcon": "build/icon.ico",
+      "installerIcon": "public/icon.ico",
+      "uninstallerIcon": "public/icon.ico",
       "uninstallDisplayName": "osu!tracker",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
     }
   },
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.0.0",
-    "@rollup/plugin-node-resolve": "^11.0.0",
-    "electron": "^17.0.0",
-    "electron-builder": "^22.14.13",
-    "rollup": "^2.3.4",
-    "rollup-plugin-css-only": "^3.1.0",
-    "rollup-plugin-livereload": "^2.0.0",
-    "rollup-plugin-svelte": "^7.0.0",
-    "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.0.0",
-    "svelte-dnd-action": "^0.9.14"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
-  "dependencies": {
-    "custom-electron-titlebar": "^4.1.0",
-    "electron-reload": "^2.0.0-alpha.1",
-    "electron-window-state": "^5.0.3",
-    "sirv-cli": "^2.0.0"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "concurrently": "^7.3.0",
+    "cross-env": "^7.0.3",
+    "electron": "^20.0.3",
+    "electron-builder": "^23.3.3",
+    "wait-on": "^6.0.1"
   }
 }
