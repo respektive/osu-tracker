@@ -2,7 +2,7 @@
 
  Statistics tracker for [osu!](https://osu.ppy.sh/) using [osu!api v2](https://osu.ppy.sh/docs/)
 
- ![Screenshot](https://pek.li/mi7t3o.png) ![Selecting Stats gif](https://pek.li/aywhs8.gif)
+ ![Screenshot](https://pek.li/0ifqap.png)
 
  **Features:**
 
@@ -10,16 +10,10 @@
 - Hide/Show each Statistic
 - Redordering the Stats list to your likings
 - Score Rank using self-hosted api (rank updates every ~30min, good enough)
-- Exporting Stats to text files for use in OBS or other programs (files are stored in systems temp directory)
+- Exporting Stats to text files for use in OBS or other programs
 - Savable Sessions
-
- **Soon™ (Planned Features):**
-
-- Ability to name Sessions
-- Make Session Manager look more pretty
-- Better way for exporting Stats (osu-profile like text fields?)
-- Login with osu! instead of Client Credentials
-- Custom Themes (load custom css files idk)
+- Multiple Colour Themes
+- Custom Colour Theme
 
 ## Download
 
@@ -63,8 +57,9 @@ npm run dev
 
 ## Resources
 
-This project uses resources form the following projects:
+This project uses resources from the following projects:
 
 - [osu!resources](https://github.com/ppy/osu-resources), original gamemode icons
+- [osu!web](https://github.com/ppy/osu-web), colour palettes
 - [OsuOpenRoomsWeb](https://gitlab.com/WebFreak001/osu-open-rooms-web/), svg files of gamemode icons
 - [Comfortaa](https://fonts.google.com/specimen/Comfortaa), font used for basically everything
