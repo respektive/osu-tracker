@@ -42,6 +42,7 @@
     "dev": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm:electron\"",
     "electron": "wait-on http://127.0.0.1:3000/ && electron .",
     "build-linux": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --linux",
+    "build-win": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --windows",
     "dist": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --windows --linux"
   },
   "build": {
