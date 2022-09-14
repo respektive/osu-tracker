@@ -19,7 +19,8 @@ async function getAccessToken() {
     const { client_id, client_secret } = settings
 
     let accessToken = store.get("access_token")
-    if (accessToken && accessToken.expires_on > ((Date.now() / 1000) - 2000)) {
+    if (accessToken && Date.now() < accessToken.expires_on * 1000 * 60 * 10 ) {
+        // token is still valid
         return accessToken.access_token
     }
 
@@ -38,7 +39,7 @@ async function getAccessToken() {
     try {
         const response = await axios.post('https://osu.ppy.sh/oauth/token', body, { headers: headers })
         accessToken = response.data
-        accessToken.expires_on = (Date.now() / 1000) + accessToken.expires_in
+        accessToken.expires_on = Date.now() + (accessToken.expires_in * 1000)
         store.set("access_token", accessToken)
         return accessToken.access_token
     } catch (err) {
