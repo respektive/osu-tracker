@@ -38,7 +38,7 @@ export default function StatsGrid({stats}) {
                 </Grid>
                 <Grid item xs={4.2}>
                   <Paper elevation={0} sx={borderStyle}>
-                    <Typography align="left" sx={{ fontSize: "14px", fontWeight: 'bold', ml: "5px", pt: "3px", color: gained.color }}>{gained.value ?? "⠀"}</Typography>
+                    <Typography align="left" sx={{ height: "24px", fontSize: "14px", fontWeight: 'bold', ml: "5px", pt: "3px", color: gained.color }}>{gained.value ?? ""}</Typography>
                   </Paper>
                 </Grid>
               </React.Fragment>
