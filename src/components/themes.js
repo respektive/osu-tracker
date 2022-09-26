@@ -62,7 +62,7 @@ const themes = {
     light: {
         palette: {
             background: {
-              paper: "#efefef",
+              paper: "#EEEEEE",
             }
           },
           shape: {

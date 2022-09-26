@@ -8,7 +8,7 @@ let titlebar;
 window.addEventListener('DOMContentLoaded', () => {
     titlebar = new Titlebar({
       backgroundColor: Color.fromHex("#121212"),
-      menu: null // = do not automatically use Menu.applicationMenu
+      menu: null, // = do not automatically use Menu.applicationMenu
     })
     titlebar.updateTitle(`osu!tracker (${localVersion})`);
 })
@@ -83,5 +83,8 @@ contextBridge.exposeInMainWorld('api',{
   getAllStats: async () => {
     const result = await ipcRenderer.invoke("getAllStats");
     return result
+  },
+  setTitlebarColor: (color) => {
+    titlebar.updateBackground(Color.fromHex(color));
   },
 })

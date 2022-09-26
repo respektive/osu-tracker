@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react"
 import { SettingsContext } from "./SettingsContext.js"
-import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { ThemeProvider, createTheme, rgbToHex, hslToRgb } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container';
 import StatsGrid from "./StatsGrid"
@@ -27,6 +27,23 @@ function App() {
     }
     return createTheme(themes[settings?.theme ?? "dark"])
   },[settings]);
+
+  // Set titlebar and border colors
+  useEffect(() => {
+    const color = theme.palette.background.paper ?? '#121212'
+    window.api.setTitlebarColor(color.startsWith("#") ? color : rgbToHex(hslToRgb(color))) 
+
+    setBorderColor(color)
+
+  }, [theme])
+
+  const setBorderColor = (color) => {
+    const appBorder = document.querySelectorAll('.cet-container');
+    console.log("setting border color")
+    appBorder.forEach(border => {
+      border.style.borderColor = color
+    })
+  }
 
   const checkForUpdate = async () => {
       const upAv = await window.api.checkForUpdate()
@@ -76,6 +93,7 @@ function App() {
 
   // Run on mount
   useEffect(() => {
+    setBorderColor(theme.palette.background.paper ?? '#121212')
     checkForUpdate()
     
     async function getSettings() {
