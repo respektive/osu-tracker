@@ -91,14 +91,11 @@ async function getRankedScoreNeededToNext(score_rank) {
     })
     
     try {
-        const rank_next = Math.max(score_rank - 1, 1);
-        const page_next = 1 + Math.floor((rank_next - 1) / 50);
         const response = await api.get(
-            `https://osu.ppy.sh/api/v2/rankings/${gamemode ?? "osu"}/score?cursor[page]=${page_next}`)
-        const pagedata = response.data
-        const index_of_next_within_page = (rank_next % 50 === 0 ? 50 : rank_next % 50) - 1;
-        const next_user = pagedata.ranking[index_of_next_within_page];
-        return next_user.ranked_score;
+            `https://score.respektive.pw/u/${user_id}?mode=${gamemode ?? "osu"}`)
+        const next_user = response.data[0].next;
+        if (!next_user) return null;
+        return next_user.score;
     } catch (err) {
         logger.error(err)
         if (err.response.status === 401) {
