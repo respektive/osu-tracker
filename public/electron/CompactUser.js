@@ -1,7 +1,7 @@
 const { GetLevelPrecise } = require("./levelCalc.js")
 
 class CompactUser {
-    constructor(user, scoreRank) {
+    constructor(user, scoreRank, scoreToNext) {
         this.date = new Date
         this.gamemode = user.gamemode
         this.user_id = user?.id
@@ -9,6 +9,10 @@ class CompactUser {
         this.username = user?.username
         this.cover_url = user?.cover_url
         this.score_rank = scoreRank?.rank
+        this.score_to_next = {
+            value: scoreToNext,
+            difference: scoreToNext - user?.statistics?.ranked_score,
+        }
         this.follower_count = user?.follower_count
         this.scores_first_count = user?.scores_first_count
         this.global_rank = user?.statistics?.global_rank

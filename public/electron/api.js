@@ -63,6 +63,53 @@ async function getScoreRank() {
     }
 }
 
+// Function name is a bit ass.
+// If score_rank is #100, this will give the difference between #99 and #100
+async function getRankedScoreNeededToNext(score_rank) {
+    if (!score_rank) return null;
+    const settings = store.get("settings")
+    if (!settings) return null;
+    const { user_id, gamemode } = settings
+    const access_token = await getAccessToken()
+    if (!access_token) return null;
+    const api = axios.create({
+        baseURL: 'https://osu.ppy.sh/api/v2',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Authorization": `Bearer ${access_token}`,
+            "x-api-version": 20220707
+        }
+    })
+
+    axiosRetry(api, {
+        retries: 5, // number of retries
+        retryDelay: (retryCount) => {
+            logger.warn(`api request failed, retrying attempt ${retryCount}`)
+            return retryCount * 2000 // time interval between retries
+        }
+    })
+    
+    try {
+        const rank_next = Math.max(score_rank - 1, 1);
+        const page_next = 1 + Math.floor((rank_next - 1) / 50);
+        const response = await api.get(
+            `https://osu.ppy.sh/api/v2/rankings/${gamemode ?? "osu"}/score?cursor[page]=${page_next}`)
+        const pagedata = response.data
+        const index_of_next_within_page = (rank_next % 50 === 0 ? 50 : rank_next % 50) - 1;
+        const next_user = pagedata.ranking[index_of_next_within_page];
+        return next_user.ranked_score;
+    } catch (err) {
+        logger.error(err)
+        if (err.response.status === 401) {
+            store.set("access_token", null)
+            await getAccessToken()
+            return await getRankedScoreNeededToNext(score_rank);
+        }
+        return null
+    }
+}     
+
 async function getOsuUser() {
     const settings = store.get("settings")
     if (!settings) return null;
@@ -107,5 +154,6 @@ async function getOsuUser() {
 
 module.exports = {
     getOsuUser,
-    getScoreRank
+    getScoreRank,
+    getRankedScoreNeededToNext,
 }
