@@ -132,7 +132,7 @@ ipcMain.handle("setInitalUser", async () => {
     store.set("inital_user", null);
     const osuUser = await getOsuUser();
     const scoreRank = await getScoreRank();
-    if (!osuUser || !scoreRank) return null;
+    if (!osuUser) return null;
     const initialUser = new CompactUser(osuUser, scoreRank);
     store.set("initial_user", initialUser);
 });
@@ -142,7 +142,7 @@ ipcMain.handle("getStats", async () => {
         const visibleStats = store.get("visible_stats") ?? ALL_STATS;
         const osuUser = await getOsuUser();
         const scoreRank = await getScoreRank();
-        if (!osuUser || !scoreRank) return "Couldn't reach osu! api. (Invalid Client Credentials or User ID?)";
+        if (!osuUser) return "Couldn't reach osu! api. (Invalid Client Credentials or User ID?)";
         const compactUser = new CompactUser(osuUser, scoreRank);
         let initialUser = store.get("initial_user");
         if (!initialUser) {
