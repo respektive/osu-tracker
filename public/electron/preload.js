@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require("electron");
-const { Titlebar, Color, createTitlebarOnDOMContentLoaded, TitlebarColor } = require("custom-electron-titlebar");
+const { createTitlebarOnDOMContentLoaded, TitlebarColor } = require("custom-electron-titlebar");
 const path = require("path");
 const localVersion = require("../../package.json").version;
 
