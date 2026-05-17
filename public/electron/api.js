@@ -64,7 +64,7 @@ async function getScoreRank() {
 }
 
 // Function name is a bit ass.
-// If score_rank is #100, this will give the difference between #99 and #100
+// If score_rank is #100, this will give the ranked score of #99
 async function getRankedScoreNeededToNext(score_rank) {
     if (!score_rank) return null;
     const settings = store.get("settings")
