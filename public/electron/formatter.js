@@ -28,7 +28,7 @@ function getWebSocketData(currentUser, initialUser) {
     let data = {}
     for (const key of Object.keys(currentUser)) {
         if (ALL_STATS.some( (e) => e.id === key)) {
-            if (key === "score_to_next") {
+            if (key === "next_score_rank") {
                 data[key] = {
                     current: formatCurrent(key, currentUser[key].value ?? 0),
                     gained: formatGained(key, currentUser[key].difference ?? 0).value
@@ -49,8 +49,9 @@ function getWebSocketData(currentUser, initialUser) {
 function getStats(currentUser, initialUser, visibleStats) {
     let data = []
     for (var stat of visibleStats) {
-        if (stat["id"] === "score_to_next") {
+        if (stat["id"] === "next_score_rank") {
             data.push({
+                id: stat["id"],
                 name: stat["name"],
                 value: formatCurrent(stat["id"], currentUser[stat["id"]].value ?? 0),
                 gained: formatGained(stat["id"], currentUser[stat["id"]].difference ?? 0)
@@ -58,6 +59,7 @@ function getStats(currentUser, initialUser, visibleStats) {
             continue;
         }
         data.push({
+            id: stat["id"],
             name: stat["name"],
             value: formatCurrent(stat["id"], currentUser[stat["id"]] ?? 0),
             gained: formatGained(stat["id"], (currentUser[stat["id"]] ?? 0) - (initialUser[stat["id"]] ?? 0))
@@ -127,7 +129,7 @@ function formatGained(key, data) {
         case "hits_per_play": {
             return { value: data == 0 ? null : pre + formatNumber(data, false), color: color }
         }
-        case "score_to_next": {
+        case "next_score_rank": {
             return { value: data == 0 ? null : formatNumber(data) + " left", color: "#30c0ff" }
         }
         default: {
