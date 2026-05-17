@@ -176,20 +176,25 @@ ipcMain.handle("getUsername", async () => {
 });
 
 ipcMain.handle("getVisibilityData", async () => {
-    const visibleStats = store.get("visible_stats");
-    const hiddenStats = store.get("hidden_stats");
-
-    const visibilityData = {
-        visibleStats: {
-            title: "Visible Stats",
-            items: visibleStats ?? ALL_STATS,
-        },
-        hiddenStats: {
-            title: "Hidden Stats",
-            items: hiddenStats ?? [],
-        },
-    };
-
+  const visibleStats = store.get("visible_stats")
+  
+  var hiddenStats = [];
+  for (const stat of ALL_STATS) {
+    if (!visibleStats.find(s => s.id == stat.id)) {
+      hiddenStats.push(stat);
+    }
+  }
+  const visibilityData = {
+    "visibleStats": {
+      title: "Visible Stats",
+      items: visibleStats ?? ALL_STATS,
+    },
+    "hiddenStats": {
+      title: "Hidden Stats",
+      items: hiddenStats ?? [],
+    },
+  }
+  
     return visibilityData;
 });
 

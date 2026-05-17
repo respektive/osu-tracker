@@ -109,5 +109,5 @@ async function getOsuUser() {
 
 module.exports = {
     getOsuUser,
-    getScoreRank
+    getScoreRank,
 }

@@ -5,10 +5,12 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
+import { useTheme } from "@mui/material/styles";
 import { SettingsContext } from './SettingsContext';
 
 
 export default function StatsGrid({stats}) {
+  const theme = useTheme();
   const [settings] = useContext(SettingsContext)
 
   const borderStyle = {
@@ -25,7 +27,8 @@ export default function StatsGrid({stats}) {
       <Grid container spacing={1}>
 
         { stats && stats.length > 0 ? 
-        stats.map(({name, value, gained}) => {
+        stats.map(({id, name, value, gained}) => {
+          const gainedColor = id === "next_score_rank" ? theme.palette.primary.main : gained.color;
             return (
               <React.Fragment key={name}>
                 <Grid item xs={3.6}>
@@ -38,7 +41,7 @@ export default function StatsGrid({stats}) {
                 </Grid>
                 <Grid item xs={4.2}>
                   <Paper elevation={0} sx={borderStyle}>
-                    <Typography align="left" sx={{ height: "24px", fontSize: "14px", fontWeight: 'bold', ml: "5px", pt: "3px", color: gained.color }}>{gained.value ?? ""}</Typography>
+                    <Typography align="left" sx={{ height: "24px", fontSize: "14px", fontWeight: 'bold', ml: "5px", pt: "3px", color: gainedColor }}>{gained.value ?? ""}</Typography>
                   </Paper>
                 </Grid>
               </React.Fragment>
