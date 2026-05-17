@@ -6,7 +6,7 @@ const { app, BrowserWindow, ipcMain, shell } = require('electron');
 const isDev = require('electron-is-dev');
 const logger = require('electron-log');
 const Store = require('electron-store');
-const { getOsuUser, getScoreRank, getRankedScoreNeededToNext } = require('./electron/api.js');
+const { getOsuUser, getScoreRank } = require('./electron/api.js');
 const { ALL_STATS } = require('./electron/constants/allStats.js');
 const { EXAMPLE_TEXT_FILES } = require('./electron/constants/exampleTextFiles.js');
 const CompactUser = require("./electron/CompactUser.js")
@@ -137,9 +137,8 @@ ipcMain.handle("setInitalUser", async () => {
   store.set("inital_user", null)
   const osuUser = await getOsuUser()
   const scoreRank = await getScoreRank()
-  const rankedScoreNeededToNext = await getRankedScoreNeededToNext(scoreRank.rank)
   if (!osuUser || !scoreRank) return null
-  const initialUser = new CompactUser(osuUser, scoreRank, rankedScoreNeededToNext)
+  const initialUser = new CompactUser(osuUser, scoreRank, scoreRank.next ? scoreRank.next.score : 0)
   store.set("initial_user", initialUser)
 })
 
@@ -148,9 +147,8 @@ ipcMain.handle("getStats", async () => {
     const visibleStats = store.get("visible_stats") ?? ALL_STATS
     const osuUser = await getOsuUser()
     const scoreRank = await getScoreRank()
-    const rankedScoreNeededToNext = await getRankedScoreNeededToNext(scoreRank.rank)
     if (!osuUser || !scoreRank) return "Couldn't reach osu! api. (Invalid Client Credentials or User ID?)"
-    const compactUser = new CompactUser(osuUser, scoreRank, rankedScoreNeededToNext)
+    const compactUser = new CompactUser(osuUser, scoreRank, scoreRank.next ? scoreRank.next.score : 0)
     let initialUser = store.get("initial_user")
     if (!initialUser) {
       store.set("initial_user", compactUser)
