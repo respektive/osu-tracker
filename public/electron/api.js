@@ -53,8 +53,10 @@ async function getScoreRank() {
     if (!settings) return null
     const { user_id, gamemode } = settings
 
+    const headers = { "User-Agent": "osu-tracker" };
+
     try {
-        const response = await axios.get(`https://score.respektive.pw/u/${user_id}?mode=${gamemode ?? "osu"}`)
+        const response = await axios.get(`https://score.respektive.pw/u/${user_id}?mode=${gamemode ?? "osu"}`, { headers });
         const scoreRank = response.data
         return scoreRank[0]
     } catch (err) {
