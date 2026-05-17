@@ -1,7 +1,7 @@
 import React from 'react'
 import { Stack, Alert, Collapse, Link, AlertTitle } from "@mui/material"
 
-export default function ErrorAlert({updateAvail, setUpdateAvail}) {
+export default function UpdateAlert({updateAvail, setUpdateAvail}) {
 
     const openLink = () => {
         window.api.openExternalLink("https://github.com/respektive/osu-tracker/releases/latest")

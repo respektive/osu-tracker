@@ -27,7 +27,7 @@ contextBridge.exposeInMainWorld("api", {
         return result;
     },
     setInitialUser: async () => {
-        await ipcRenderer.invoke("setInitalUser");
+        await ipcRenderer.invoke("setInitialUser");
     },
     getUsername: async () => {
         const result = await ipcRenderer.invoke("getUsername");

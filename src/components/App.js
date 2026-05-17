@@ -39,7 +39,7 @@ function App() {
 
   const setBorderColor = (color) => {
     const appBorder = document.querySelectorAll('.cet-container');
-    console.log("setting border color")
+
     appBorder.forEach(border => {
       border.style.borderColor = color
     })

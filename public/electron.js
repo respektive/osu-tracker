@@ -128,8 +128,8 @@ ipcMain.handle("getSettings", async () => {
     return settings;
 });
 
-ipcMain.handle("setInitalUser", async () => {
-    store.set("inital_user", null);
+ipcMain.handle("setInitialUser", async () => {
+    store.set("initial_user", null);
     const osuUser = await getOsuUser();
     const scoreRank = await getScoreRank();
     if (!osuUser) return null;
