@@ -48,15 +48,16 @@ async function getAccessToken() {
     }
 }
 
-async function getScoreRank() {
+async function getScoreRank(osu_user) {
     const settings = store.get("settings")
     if (!settings) return null
     const { user_id, gamemode } = settings
-
+    const target_score = osu_user.statistics?.ranked_score;
+    const score_string = target_score ? `&score=${target_score}` : "";
+    console.log(`https://score.respektive.pw/u/${user_id}?mode=${gamemode ?? "osu"}${score_string}`)
     const headers = { "User-Agent": "osu-tracker" };
-
     try {
-        const response = await axios.get(`https://score.respektive.pw/u/${user_id}?mode=${gamemode ?? "osu"}`, { headers });
+        const response = await axios.get(`https://score.respektive.pw/u/${user_id}?mode=${gamemode ?? "osu"}${score_string}`, { headers });
         const scoreRank = response.data
         return scoreRank[0]
     } catch (err) {

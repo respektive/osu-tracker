@@ -131,8 +131,8 @@ ipcMain.handle("getSettings", async () => {
 ipcMain.handle("setInitialUser", async () => {
     store.set("initial_user", null);
     const osuUser = await getOsuUser();
-    const scoreRank = await getScoreRank();
     if (!osuUser) return null;
+    const scoreRank = await getScoreRank(osuUser);
     const initialUser = new CompactUser(osuUser, scoreRank);
     store.set("initial_user", initialUser);
 });
@@ -141,8 +141,8 @@ ipcMain.handle("getStats", async () => {
     try {
         const visibleStats = store.get("visible_stats") ?? ALL_STATS;
         const osuUser = await getOsuUser();
-        const scoreRank = await getScoreRank();
         if (!osuUser) return "Couldn't reach osu! api. (Invalid Client Credentials or User ID?)";
+        const scoreRank = await getScoreRank(osuUser);
         const compactUser = new CompactUser(osuUser, scoreRank);
         let initialUser = store.get("initial_user");
         if (!initialUser) {
@@ -176,25 +176,25 @@ ipcMain.handle("getUsername", async () => {
 });
 
 ipcMain.handle("getVisibilityData", async () => {
-  const visibleStats = store.get("visible_stats")
-  
-  var hiddenStats = [];
-  for (const stat of ALL_STATS) {
-    if (!visibleStats.find(s => s.id == stat.id)) {
-      hiddenStats.push(stat);
+    const visibleStats = store.get("visible_stats");
+
+    var hiddenStats = [];
+    for (const stat of ALL_STATS) {
+        if (!visibleStats.find((s) => s.id == stat.id)) {
+            hiddenStats.push(stat);
+        }
     }
-  }
-  const visibilityData = {
-    "visibleStats": {
-      title: "Visible Stats",
-      items: visibleStats ?? ALL_STATS,
-    },
-    "hiddenStats": {
-      title: "Hidden Stats",
-      items: hiddenStats ?? [],
-    },
-  }
-  
+    const visibilityData = {
+        visibleStats: {
+            title: "Visible Stats",
+            items: visibleStats ?? ALL_STATS,
+        },
+        hiddenStats: {
+            title: "Hidden Stats",
+            items: hiddenStats ?? [],
+        },
+    };
+
     return visibilityData;
 });
 
