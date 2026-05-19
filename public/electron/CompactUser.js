@@ -24,6 +24,10 @@ class CompactUser {
         this.play_count = user?.statistics?.play_count
         this.play_time = user?.statistics?.play_time
         this.total_hits = user?.statistics?.total_hits
+        this.count_300 = user?.statistics?.count_300
+        this.count_100 = user?.statistics?.count_100
+        this.count_50 = user?.statistics?.count_50
+        this.count_miss = user?.statistics?.count_miss
         this.maximum_combo = user?.statistics?.maximum_combo
         this.replays_watched_by_others = user?.statistics?.replays_watched_by_others
         this.ss_count = user?.statistics?.grade_counts?.ss
