@@ -28,8 +28,23 @@ const ALL_STATS = [
     { id: "ranked_score_per_play", name: "R. Score/Play" },
     { id: "hits_per_play", name: "Hits per Play" },
     { id: "next_score_rank", name: "Next Rank" },
+    { id: "count_300", name: "Total 300s" },
+    { id: "count_100", name: "Total 100s" },
+    { id: "count_50", name: "Total 50s" },
+    { id: "count_miss", name: "Total Misses" },
 ];
+
+function getValidStats(statsArray) {
+    if (!Array.isArray(statsArray)) return ALL_STATS;
+
+    return statsArray.filter((stat) => {
+        if (!stat | !stat.id | !stat.name | Array.isArray(stat) | (typeof stat !== "object")) return false;
+
+        return ALL_STATS.some((validStat) => validStat.id === stat.id && validStat.name === stat.name);
+    });
+}
 
 module.exports = {
     ALL_STATS,
+    getValidStats,
 };

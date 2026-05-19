@@ -7,7 +7,7 @@ const isDev = require("electron-is-dev");
 const logger = require("electron-log");
 const Store = require("electron-store");
 const { getOsuUser, getScoreRank } = require("./electron/api.js");
-const { ALL_STATS } = require("./electron/constants/allStats.js");
+const { ALL_STATS, getValidStats } = require("./electron/constants/allStats.js");
 const { EXAMPLE_TEXT_FILES } = require("./electron/constants/exampleTextFiles.js");
 const CompactUser = require("./electron/CompactUser.js");
 const { getStats, getWebSocketData } = require("./electron/formatter.js");
@@ -139,7 +139,7 @@ ipcMain.handle("setInitialUser", async () => {
 
 ipcMain.handle("getStats", async () => {
     try {
-        const visibleStats = store.get("visible_stats") ?? ALL_STATS;
+        const visibleStats = getValidStats(store.get("visible_stats"));
         const osuUser = await getOsuUser();
         if (!osuUser) return "Couldn't reach osu! api. (Invalid Client Credentials or User ID?)";
         const scoreRank = await getScoreRank(osuUser);
@@ -176,14 +176,9 @@ ipcMain.handle("getUsername", async () => {
 });
 
 ipcMain.handle("getVisibilityData", async () => {
-    const visibleStats = store.get("visible_stats");
+    const visibleStats = getValidStats(store.get("visible_stats"));
+    const hiddenStats = ALL_STATS.filter(s => !visibleStats.map(vs => vs.id).includes(s.id));
 
-    var hiddenStats = [];
-    for (const stat of ALL_STATS) {
-        if (!visibleStats.find((s) => s.id == stat.id)) {
-            hiddenStats.push(stat);
-        }
-    }
     const visibilityData = {
         visibleStats: {
             title: "Visible Stats",
@@ -200,8 +195,8 @@ ipcMain.handle("getVisibilityData", async () => {
 
 ipcMain.handle("setVisibilityData", async (e, arg) => {
     const visibilityData = arg;
-    const visibleStats = visibilityData.visibleStats.items;
-    const hiddenStats = visibilityData.hiddenStats.items;
+    const visibleStats = getValidStats(visibilityData.visibleStats.items);
+    const hiddenStats = getValidStats(visibilityData.hiddenStats.items);
 
     store.set("visible_stats", visibleStats);
     store.set("hidden_stats", hiddenStats);
