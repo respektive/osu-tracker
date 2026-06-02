@@ -54,13 +54,26 @@ async function startWebSocket() {
     }
 }
 
+function debounce(func, delay) {
+    let timeout;
+    return (...args) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
 function createWindow() {
     const windowBounds = getWindowBounds();
 
-    // Create the browser window.
+    // newer electron version seems to cache the initial width and height as its minimum
+    // regardless of what we set here for whatever reason.
+    // so we set them to our minimum here and hide the window, before applying the actual saved bounds below.
     const win = new BrowserWindow({
+        width: 420,
+        height: 190,
         minWidth: 420,
         minHeight: 190,
+        show: false,
         autoHideMenuBar: true,
         icon: path.join(__dirname, "./icon.ico"),
         titleBarStyle: "hidden",
@@ -72,14 +85,30 @@ function createWindow() {
         },
     });
 
-    win.setBounds(windowBounds);
+    // once the window is ready we set the actual saved bounds and then show it.
+    win.once("ready-to-show", () => {
+        win.setMinimumSize(420, 190);
 
-    win.on("move", () => {
-        setWindowBounds(win.getBounds());
+        win.setBounds({
+            width: Math.max(windowBounds.width, 420),
+            height: Math.max(windowBounds.height, 190),
+            x: Math.max(windowBounds.x, 0),
+            y: Math.max(windowBounds.y, 0),
+        });
+
+        win.show();
     });
-    win.on("resize", () => {
-        setWindowBounds(win.getBounds());
-    });
+
+    // debounce bounds saving to avoid any other random race conditions issues...
+    const saveBoundsDebounced = debounce(() => {
+        if (!win.isDestroyed()) {
+            const bounds = win.getBounds();
+            setWindowBounds(bounds);
+        }
+    }, 300);
+
+    win.on("move", saveBoundsDebounced);
+    win.on("resize", saveBoundsDebounced);
 
     // load the index.html of the app.
     win.loadURL(isDev ? "http://localhost:3000" : `file://${path.join(__dirname, "../build/index.html")}`);
