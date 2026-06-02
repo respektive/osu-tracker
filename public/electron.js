@@ -64,6 +64,8 @@ function debounce(func, delay) {
 
 function createWindow() {
     const windowBounds = getWindowBounds();
+    const settings = store.get("settings");
+    const useCustomTitlebar = settings?.custom_titlebar !== false;
 
     // newer electron version seems to cache the initial width and height as its minimum
     // regardless of what we set here for whatever reason.
@@ -76,8 +78,8 @@ function createWindow() {
         show: false,
         autoHideMenuBar: true,
         icon: path.join(__dirname, "./icon.ico"),
-        titleBarStyle: "hidden",
-        frame: false,
+        titleBarStyle: useCustomTitlebar ? "hidden" : "default",
+        frame: !useCustomTitlebar,
         webPreferences: {
             preload: path.join(__dirname, "./electron/preload.js"),
             enableRemoteModule: true,
@@ -113,7 +115,9 @@ function createWindow() {
     // load the index.html of the app.
     win.loadURL(isDev ? "http://localhost:3000" : `file://${path.join(__dirname, "../build/index.html")}`);
 
-    attachTitlebarToWindow(win);
+    if (useCustomTitlebar) {
+        attachTitlebarToWindow(win);
+    }
 
     // Open the DevTools.
     if (isDev) {

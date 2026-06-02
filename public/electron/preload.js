@@ -1,17 +1,25 @@
 const { contextBridge, ipcRenderer } = require("electron");
 const { createTitlebarOnDOMContentLoaded, TitlebarColor } = require("custom-electron-titlebar");
-const path = require("path");
 const localVersion = require("../../package.json").version;
 
 let titlebar;
 
-createTitlebarOnDOMContentLoaded({
-    backgroundColor: TitlebarColor.fromHex("#121212"),
-    removeMenuBar: true,
-}).then((customTitlebar) => {
-    titlebar = customTitlebar;
-    titlebar.updateTitle(`osu!tracker (${localVersion})`);
-});
+const setup = async () => {
+    const settings = await ipcRenderer.invoke("getSettings");
+    const useCustomTitlebar = settings?.custom_titlebar !== false;
+
+    if (!useCustomTitlebar) return;
+
+    createTitlebarOnDOMContentLoaded({
+        backgroundColor: TitlebarColor.fromHex("#121212"),
+        removeMenuBar: true,
+    }).then((customTitlebar) => {
+        titlebar = customTitlebar;
+        titlebar.updateTitle(`osu!tracker (${localVersion})`);
+    });
+};
+
+setup();
 
 contextBridge.exposeInMainWorld("api", {
     saveSettings: async (settings) => {
