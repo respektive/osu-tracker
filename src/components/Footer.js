@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Box, Link, Modal } from "@mui/material";
 import About from "./About";
+import { SettingsContext } from "./SettingsContext";
 
 const style = {
     position: "absolute",
@@ -17,12 +18,17 @@ const style = {
 };
 
 export default function Footer() {
+    const [settings] = useContext(SettingsContext);
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    const [marginValue] = useState(() => {
+        return settings?.custom_titlebar !== false ? 0 : 4;
+    });
+
     return (
-        <Box textAlign="center" sx={{ width: "100%", height: "24px", mt: 4, bgcolor: "background.paper" }}>
+        <Box textAlign="center" sx={{ width: "100%", height: "24px", mt: marginValue, bgcolor: "background.paper" }}>
             <Link component="button" variant="body2" underline="hover" onClick={handleOpen}>
                 made by respektive
             </Link>
