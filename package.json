@@ -1,113 +1,122 @@
 {
-  "name": "osu-tracker",
-  "version": "2.2.0",
-  "description": "Statistics tracker for osu! using osu!apiv2",
-  "author": "respektive",
-  "license": "MIT",
-  "private": true,
-  "main": "public/electron.js",
-  "homepage": "./",
-  "dependencies": {
-    "@emotion/react": "^11.10.0",
-    "@emotion/styled": "^11.10.0",
-    "@fontsource/comfortaa": "^4.5.9",
-    "@mui/icons-material": "^5.10.3",
-    "@mui/material": "^5.10.2",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.16.1",
-    "axios-retry": "^3.3.1",
-    "canvas-confetti": "^1.5.1",
-    "custom-electron-titlebar": "^4.4.1",
-    "electron-is-dev": "^2.0.0",
-    "electron-log": "^4.4.8",
-    "electron-store": "^8.1.0",
-    "express": "^4.18.1",
-    "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
-    "react-colorful": "^5.6.1",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "semver": "^7.3.7",
-    "tcp-port-used": "^1.0.2",
-    "use-debounce": "^8.0.4",
-    "web-vitals": "^2.1.4",
-    "ws": "^8.8.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm:electron\"",
-    "electron": "wait-on http://127.0.0.1:3000/ && electron .",
-    "build-linux": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --linux",
-    "build-win": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --windows",
-    "dist": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --windows --linux"
-  },
-  "build": {
-    "appId": "osu-tracker",
-    "files": [
-      "build/**/*",
-      "node_modules/**/*"
-    ],
-    "directories": {
-      "buildResources": "assets"
+    "name": "osu-tracker",
+    "version": "2.2.1",
+    "description": "Statistics tracker for osu! using osu!apiv2",
+    "author": "respektive",
+    "license": "MIT",
+    "private": true,
+    "main": "public/electron.js",
+    "homepage": "./",
+    "dependencies": {
+        "@emotion/react": "^11.10.0",
+        "@emotion/styled": "^11.10.0",
+        "@fontsource/comfortaa": "^4.5.9",
+        "@mui/icons-material": "^5.10.3",
+        "@mui/material": "^5.10.2",
+        "axios": "^1.16.1",
+        "axios-retry": "^3.3.1",
+        "canvas-confetti": "^1.5.1",
+        "custom-electron-titlebar": "^4.4.1",
+        "electron-is-dev": "^2.0.0",
+        "electron-log": "^4.4.8",
+        "electron-store": "^8.1.0",
+        "express": "^4.18.1",
+        "react": "^18.2.0",
+        "react-beautiful-dnd": "^13.1.1",
+        "react-colorful": "^5.6.1",
+        "react-dom": "^18.2.0",
+        "semver": "^7.3.7",
+        "tcp-port-used": "^1.0.2",
+        "use-debounce": "^8.0.4",
+        "ws": "^8.8.1"
     },
-    "linux": {
-      "icon": "public/icon.png",
-      "target": [
-        "AppImage",
-        "tar.gz"
-      ],
-      "category": "Utility"
+    "devDependencies": {
+        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/react": "^13.3.0",
+        "@testing-library/user-event": "^13.5.0",
+        "concurrently": "^7.3.0",
+        "cross-env": "^7.0.3",
+        "electron": "^42.1.0",
+        "electron-builder": "^26.8.1",
+        "react-scripts": "5.0.1",
+        "wait-on": "^9.0.10",
+        "web-vitals": "^2.1.4"
     },
-    "win": {
-      "icon": "public/icon.png",
-      "target": [
-        "nsis",
-        "portable"
-      ]
+    "overrides": {
+        "serialize-javascript": "^7.0.5",
+        "nth-check": "^2.1.1",
+        "postcss": "^8.4.38",
+        "underscore": "^1.13.8",
+        "axios": "^1.16.1"
     },
-    "nsis": {
-      "installerIcon": "public/icon.ico",
-      "uninstallerIcon": "public/icon.ico",
-      "uninstallDisplayName": "osu!tracker",
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "dev": "concurrently -k \"cross-env BROWSER=none npm start\" \"npm:electron\"",
+        "electron": "wait-on http://127.0.0.1:3000/ && electron .",
+        "build-linux": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --linux",
+        "build-win": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --windows",
+        "dist": "npm run build && electron-builder -c.extraMetadata.main=build/electron.js --windows --linux"
+    },
+    "build": {
+        "productName": "osu-tracker",
+        "appId": "osu-tracker",
+        "asar": true,
+        "files": [
+            "build/**/*",
+            "package.json"
+        ],
+        "directories": {
+            "buildResources": "assets"
+        },
+        "linux": {
+            "artifactName": "${productName}-${version}-linux-${arch}.${ext}",
+            "icon": "public/icon.png",
+            "target": [
+                "AppImage",
+                "tar.gz"
+            ],
+            "category": "Utility"
+        },
+        "win": {
+            "artifactName": "${productName}-${version}-win-${arch}.${ext}",
+            "icon": "public/icon.png",
+            "target": [
+                "nsis",
+                "portable",
+                "zip"
+            ]
+        },
+        "nsis": {
+            "installerIcon": "public/icon.ico",
+            "uninstallerIcon": "public/icon.ico",
+            "uninstallDisplayName": "osu!tracker",
+            "oneClick": false,
+            "allowToChangeInstallationDirectory": true,
+            "artifactName": "${productName}-${version}-win-setup-${arch}.${ext}"
+        },
+        "portable": {
+            "artifactName": "${productName}-${version}-win-portable-${arch}.${ext}"
+        }
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
     }
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "concurrently": "^7.3.0",
-    "cross-env": "^7.0.3",
-    "electron": "^42.1.0",
-    "electron-builder": "^26.8.1",
-    "wait-on": "^9.0.10"
-  },
-  "overrides": {
-    "serialize-javascript": "^7.0.5",
-    "nth-check": "^2.1.1",
-    "postcss": "^8.4.38",
-    "underscore": "^1.13.8",
-    "axios": "^1.16.1"
-  }
 }
