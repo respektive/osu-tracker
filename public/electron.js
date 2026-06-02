@@ -177,7 +177,7 @@ ipcMain.handle("getUsername", async () => {
 
 ipcMain.handle("getVisibilityData", async () => {
     const visibleStats = getValidStats(store.get("visible_stats"));
-    const hiddenStats = ALL_STATS.filter(s => !visibleStats.map(vs => vs.id).includes(s.id));
+    const hiddenStats = ALL_STATS.filter((s) => !visibleStats.map((vs) => vs.id).includes(s.id));
 
     const visibilityData = {
         visibleStats: {
