@@ -21,6 +21,8 @@ const ALL_STATS = [
     { id: "total_ss", name: "Total SS" },
     { id: "total_s", name: "Total S" },
     { id: "clears", name: "Clears" },
+    { id: "total_gold", name: "Total Gold" },
+    { id: "total_silver", name: "Total Silver" },
     { id: "country_rank", name: "Country Rank" },
     { id: "medal_count", name: "Medals" },
     { id: "badge_count", name: "Badges" },

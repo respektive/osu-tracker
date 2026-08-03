@@ -38,6 +38,8 @@ class CompactUser {
         this.total_ss = (this.ss_count ?? 0) + (this.ssh_count ?? 0)
         this.total_s = (this.s_count ?? 0) + (this.sh_count ?? 0)
         this.clears = (this.total_ss ?? 0) + (this.total_s ?? 0) + (this.a_count ?? 0)
+        this.total_gold = (this.ss_count ?? 0) + (this.s_count ?? 0)
+        this.total_silver = (this.ssh_count ?? 0) + (this.sh_count ?? 0)
         this.country_rank = user?.statistics?.country_rank
         this.medal_count = user?.user_achievements?.length
         this.badge_count = user?.badges?.length
