@@ -73,7 +73,7 @@ function getStats(currentUser, initialUser, visibleStats) {
 function formatCurrent(key, data) {
     switch (key) {
         case "score_rank": {
-            return data == 0 ? "Unavailable" : "#" + formatNumber(data);
+            return (!data || data == 0 || data > 10000) ? "Unavailable" : "#" + formatNumber(data);
         }
         case "country_rank":
         case "global_rank": {
