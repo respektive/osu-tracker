@@ -1,4 +1,7 @@
 const { ALL_STATS } = require("./constants/allStats");
+const Store = require('electron-store');
+
+const store = new Store();
 
 //https://stackoverflow.com/a/7579799
 function seconds2time(seconds) {
@@ -138,10 +141,11 @@ function formatGained(key, data) {
 }
 
 function formatNumber(n, round = true) {
+    const settings = store.get("settings");
     try {
         if (!n) return 0;
         if (round) n = Math.round(n);
-        return n.toLocaleString("en-US");
+        return n.toLocaleString("en-US", { maximumFractionDigits: settings?.max_decimal_places ?? 3, minimumFractionDigits: 0 });
     } catch (e) {
         return "0";
     }

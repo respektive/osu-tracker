@@ -30,7 +30,7 @@ function GetLevelPrecise(score) {
 	if (!isFinite(res)) {
 		return 0;
 	}
-	return res.toFixed(3);
+	return res;
 }
 
 module.exports = {

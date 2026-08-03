@@ -69,6 +69,10 @@ export default function GeneralSettings({ refreshStats }) {
         }
     };
 
+    const setMaxDecimalPlaces = (event) => {
+        setSettings({ ...settings, max_decimal_places: event.target.value });
+    };
+
     const setDelay = (event) => {
         setSettings({ ...settings, interval: event.target.value * 1000 });
     };
@@ -249,6 +253,23 @@ export default function GeneralSettings({ refreshStats }) {
                             />
                         }
                         label="Use custom titlebar (requires restart)"
+                    />
+                </Grid>
+            </Grid>
+
+            <Grid container direction="row" justifyContent="flex-start" alignItems="center" spacing={2}>
+                <Grid item xs={5.5} sx={{ ml: 1.5 }}>
+                    <Typography>Max decimal places</Typography>
+                    <Slider
+                        sx={{ p: 0 }}
+                        aria-label="Max decimal places"
+                        defaultValue={settings?.max_decimal_places ?? 3}
+                        step={1}
+                        marks
+                        min={0}
+                        max={10}
+                        valueLabelDisplay="auto"
+                        onChange={setMaxDecimalPlaces}
                     />
                 </Grid>
             </Grid>
