@@ -48,8 +48,25 @@ export default function GeneralSettings({ refreshStats }) {
         }, 1000);
     };
 
+    const getGamemodeValue = () => {
+        if (settings.mania_variant > 0) {
+            return `mania${settings.mania_variant}k`;
+        }
+        return settings.gamemode ?? "osu";
+    };
+
     const setGamemode = (event) => {
-        setSettings({ ...settings, gamemode: event.target.value });
+        switch (event.target.value) {
+            case "mania4k":
+                setSettings({ ...settings, gamemode: "mania", mania_variant: 4 });
+                break;
+            case "mania7k":
+                setSettings({ ...settings, gamemode: "mania", mania_variant: 7 });
+                break;
+            default:
+                setSettings({ ...settings, gamemode: event.target.value, mania_variant: null });
+                break;
+        }
     };
 
     const setDelay = (event) => {
@@ -120,7 +137,7 @@ export default function GeneralSettings({ refreshStats }) {
                     <FormControl fullWidth sx={{ mt: 1 }}>
                         <InputLabel id="gamemode-label">Gamemode</InputLabel>
                         <Select
-                            value={settings?.gamemode ?? "osu"}
+                            value={getGamemodeValue()}
                             labelId="gamemode-label"
                             id="gamemode-label"
                             margin="dense"
@@ -135,6 +152,8 @@ export default function GeneralSettings({ refreshStats }) {
                             <MenuItem value={"taiko"}>osu!taiko</MenuItem>
                             <MenuItem value={"fruits"}>osu!catch</MenuItem>
                             <MenuItem value={"mania"}>osu!mania</MenuItem>
+                            <MenuItem value={"mania4k"}>osu!mania (4K)</MenuItem>
+                            <MenuItem value={"mania7k"}>osu!mania (7K)</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>

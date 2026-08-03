@@ -1,9 +1,14 @@
 const { GetLevelPrecise } = require("./levelCalc.js")
 
+function getManiaVariant(user, mania_variant) {
+    return user?.statistics?.variants?.find(o => o.variant === mania_variant + "k") ?? null
+}
+
 class CompactUser {
     constructor(user, scoreRank) {
         this.date = new Date
         this.gamemode = user.gamemode
+        this.mania_variant = user.mania_variant
         this.user_id = user?.id
         this.avatar_url = user?.avatar_url
         this.username = user?.username
@@ -15,8 +20,8 @@ class CompactUser {
         }
         this.follower_count = user?.follower_count
         this.scores_first_count = user?.scores_first_count
-        this.global_rank = user?.statistics?.global_rank
-        this.pp = user?.statistics?.pp
+        this.global_rank = this.mania_variant ? getManiaVariant(user, this.mania_variant)?.global_rank : user?.statistics?.global_rank
+        this.pp = this.mania_variant ? getManiaVariant(user, this.mania_variant)?.pp : user?.statistics?.pp
         this.ranked_score = user?.statistics?.ranked_score
         this.total_score = user?.statistics?.total_score
         this.level = GetLevelPrecise(this.total_score ?? 0)
@@ -40,7 +45,7 @@ class CompactUser {
         this.clears = (this.total_ss ?? 0) + (this.total_s ?? 0) + (this.a_count ?? 0)
         this.total_gold = (this.ss_count ?? 0) + (this.s_count ?? 0)
         this.total_silver = (this.ssh_count ?? 0) + (this.sh_count ?? 0)
-        this.country_rank = user?.statistics?.country_rank
+        this.country_rank = this.mania_variant ? getManiaVariant(user, this.mania_variant)?.country_rank : user?.statistics?.country_rank
         this.medal_count = user?.user_achievements?.length
         this.badge_count = user?.badges?.length
         this.total_score_per_play = this.total_score / this.play_count

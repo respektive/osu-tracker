@@ -69,7 +69,7 @@ async function getScoreRank(osu_user) {
 async function getOsuUser() {
     const settings = store.get("settings")
     if (!settings) return null;
-    const { user_id, gamemode } = settings
+    const { user_id, gamemode, mania_variant } = settings
     const access_token = await getAccessToken()
     if (!access_token) return null;
     const api = axios.create({
@@ -94,6 +94,7 @@ async function getOsuUser() {
         const response = await api.get(`https://osu.ppy.sh/api/v2/users/${user_id}/${gamemode ?? "osu"}`)
         const user = response.data
         user.gamemode = gamemode ?? "osu"
+        user.mania_variant = mania_variant ?? null
         store.set("username", user.username)
         return user
     } catch (err) {
