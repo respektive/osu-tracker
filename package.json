@@ -1,6 +1,6 @@
 {
     "name": "osu-tracker",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "description": "Statistics tracker for osu! using osu!apiv2",
     "author": "respektive",
     "license": "MIT",

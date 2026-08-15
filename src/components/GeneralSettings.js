@@ -49,10 +49,10 @@ export default function GeneralSettings({ refreshStats }) {
     };
 
     const getGamemodeValue = () => {
-        if (settings.mania_variant > 0) {
+        if (settings?.mania_variant > 0) {
             return `mania${settings.mania_variant}k`;
         }
-        return settings.gamemode ?? "osu";
+        return settings?.gamemode ?? "osu";
     };
 
     const setGamemode = (event) => {
