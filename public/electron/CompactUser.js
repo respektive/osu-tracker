@@ -15,8 +15,8 @@ class CompactUser {
         this.cover_url = user?.cover_url
         this.score_rank = scoreRank?.rank
         this.next_score_rank = {
-            value: scoreRank.next?.score ? scoreRank.next.score : user?.ranked_score,
-            difference: scoreRank.next?.score ? (scoreRank.next.score - user?.statistics?.ranked_score) : 0,
+            value: scoreRank?.next?.score ? scoreRank?.next.score : user?.ranked_score,
+            difference: scoreRank?.next?.score ? (scoreRank?.next.score - user?.statistics?.ranked_score) : 0,
         }
         this.follower_count = user?.follower_count
         this.scores_first_count = user?.scores_first_count
