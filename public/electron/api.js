@@ -4,7 +4,7 @@ const Store = require('electron-store')
 const axiosRetry = require('axios-retry')
 
 axiosRetry(axios, {
-    retries: 5, // number of retries
+    retries: 3, // number of retries
     retryDelay: (retryCount) => {
         logger.warn(`api request failed, retrying attempt ${retryCount}`)
         return retryCount * 2000 // time interval between retries
@@ -83,7 +83,7 @@ async function getOsuUser() {
     })
 
     axiosRetry(api, {
-        retries: 5, // number of retries
+        retries: 3, // number of retries
         retryDelay: (retryCount) => {
             logger.warn(`api request failed, retrying attempt ${retryCount}`)
             return retryCount * 2000 // time interval between retries
